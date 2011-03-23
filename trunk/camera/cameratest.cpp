@@ -1,6 +1,7 @@
 #define PROGRAM_TITLE "Assignment 1"
 #define DISPLAY_INFO "Klassen, Chad"
 
+#include <iostream>
 #include <stdlib.h>  // Useful for the following includes.
 #include <stdio.h>    
 #include <string.h>  // For spring operations.
@@ -8,6 +9,8 @@
 #include <GL/gl.h>   // OpenGL itself.
 #include <GL/glu.h>  // GLU support library.
 #include <GL/glut.h> // GLUT support library.
+
+#include "camera.h"
 
 // Some global variables.
 // Window IDs, window width and height.
@@ -22,6 +25,7 @@ float X_Speed = 0.0f;  // the rotation.
 float Y_Speed = 0.0f;
 float Z_Off   =-5.0f;
 
+Camera* camera = new Camera();
 
 
 /////////////////////////////////////////////////////////
@@ -40,7 +44,14 @@ void CallBackRenderScene(void)
    // Move back to the origin
    glLoadIdentity();
    
-   gluLookAt(3.0, 3.0, 3.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+   
+   camera->lookat();
+   /*
+   gluLookAt(3.0, 3.0, 3.0, 
+	     0.0, 0.0, 0.0, 
+	     0.0, 1.0, 0.0);
+   */
+   
    GLUquadric* quad = gluNewQuadric();
    glPushMatrix();
    glScalef(0.75, 1.0, 0.75);
@@ -95,10 +106,35 @@ void myCBKey(unsigned char key, int x, int y)
     case 122:
       Z_Off += 0.05f;
      break;
-    
+ 
+      
     }
+    
+   // printf("%d", key);
 }
 
+void mySCBKey(int key, int x, int y) {
+  
+  switch (key)
+  {
+    case 102:
+      camera->rotate_right(0.5);
+    break;
+    case 100:
+      camera->rotate_left(0.5);
+      break;
+    case 101: //up
+      camera->rotate_up(0.5);
+      break;
+    case 103: //down
+      camera->rotate_down(0.5);
+      break;
+    
+  }
+  
+ // printf("%d", key);
+  
+}
 
 
 
@@ -145,6 +181,9 @@ void MyInit(int Width, int Height)
    glEnable(GL_LIGHT0);
    glEnable(GL_DEPTH_TEST);
    
+   
+   
+   
    // Color to clear color buffer to.
    glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
 
@@ -169,6 +208,8 @@ void MyInit(int Width, int Height)
 ///////////////////////////////////////////////////
 int main(int argc, char **argv)
 {
+  
+  
    glutInit(&argc, argv);
    
    // To see OpenGL drawing, take out the GLUT_DOUBLE request.
@@ -192,7 +233,7 @@ int main(int argc, char **argv)
    // Register and install the callback function for
    // Some keys and special keys.
    glutKeyboardFunc(&myCBKey);
-   
+   glutSpecialFunc(&mySCBKey);
 
    // OK, OpenGL's ready to go.  Let's call our own init function.
    MyInit(Window_Width, Window_Height);
@@ -210,3 +251,5 @@ int main(int argc, char **argv)
    // Never returns.
    return 1; 
 }
+
+
