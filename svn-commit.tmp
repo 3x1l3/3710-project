@@ -1,0 +1,7 @@
+Beginnings of the Robot CODE!
+--This line, and those below, will be ignored--
+
+A    robot_code
+AM   robot_code/robot
+A    robot_code/robot.c
+A    robot_code/Makefile

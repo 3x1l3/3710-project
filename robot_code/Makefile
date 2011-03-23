@@ -9,4 +9,5 @@ LIBRARIES = -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm
 All: robot
 
 robot: robot.o
-	$(CC) $(CFLAGS) -o $@ $(LIBDIR) $< $(LIBRARIES)
+        $(CC) $(CFLAGS) -o $@ $(LIBDIR) $< $(LIBRARIES)
+
