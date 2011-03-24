@@ -40,38 +40,43 @@ void CallBackRenderScene(void)
    // Move back to the origin
    glLoadIdentity();
    
+   //body
    gluLookAt(3.0, 3.0, 3.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
    GLUquadric* quad = gluNewQuadric();
    glPushMatrix();
+   glColor3f(0.2, 0.5, 0.5);
    glScalef(0.75, 1.0, 0.75);
    glutSolidCube(1);
+  
    glPopMatrix();
-   
+   //neck
    glPushMatrix();
+   glColor3f(0.1, 0.25, 0.25);
    glTranslatef(0.0, 1.0, 0.0);
    glRotatef(90, 1.0, 0.0, 0.0);
    gluCylinder(quad, 0.25, 0.25, 0.5, 100, 100);
    glPopMatrix();
-   
+
+   //Antena
    glPushMatrix();
    glTranslatef(0.0, 1.4, 0.0);
    glRotatef(90, 1.0, 0.0, 0.0);
    glColor3f(0.2, 0.2, 0.5);
    gluCylinder(quad, 0.1, 0.1, 0.2, 100, 100);
    glPopMatrix();
-   
-   
+  
+   //Eyes
    glPushMatrix();
-   glTranslatef(-0.10, 1.1, 0.3);
+   glColor3f(1.0, 0.0, 0.0);
+   glTranslatef(-0.1, 1.1, 0.3);
    glutSolidSphere(0.05, 15, 15);
    glTranslatef(0.25, 0.0, 0.0);
    glutSolidSphere(0.05, 15, 15);
    glPopMatrix();
    
+   //Head
    glTranslatef(0.0, 1, 0.0);
-
    glColor3f(0.2, 0.5, 0.5);
-
    glutSolidCube(0.5);
    
  
@@ -142,6 +147,7 @@ void MyInit(int Width, int Height)
    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
    glEnable(GL_LIGHTING);
+   glEnable(GL_COLOR_MATERIAL); //<- needed for colors to appear when using lighting effect
    glEnable(GL_LIGHT0);
    glEnable(GL_DEPTH_TEST);
    
@@ -197,11 +203,14 @@ int main(int argc, char **argv)
    // OK, OpenGL's ready to go.  Let's call our own init function.
    MyInit(Window_Width, Window_Height);
 
+/*    -------------- This is really not necessary in actual application  ---------------    
+   
    // Print out a bit of help dialog.
    printf("\n%s\n\n", PROGRAM_TITLE);
    printf("Print out some helpful information here.\n");
    printf("When you program, you can also use\n");
    printf("printf to do debugging.\n\n");
+*/
 
    // Above functions represents those you will do to set up your
    // application program.
