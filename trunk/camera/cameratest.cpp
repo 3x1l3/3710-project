@@ -101,16 +101,21 @@ void myCBKey(unsigned char key, int x, int y)
 {
    switch (key) {
      case 97:
-      Z_Off -= 0.05f;
+      camera->walk(1);
      break;
     case 122:
-      Z_Off += 0.05f;
+      camera->walk(2);
      break;
- 
+    case 61:
+      
+      break;
+    case 45:
+      
+      break;
       
     }
     
-   // printf("%d", key);
+    printf("%d", key);
 }
 
 void mySCBKey(int key, int x, int y) {
