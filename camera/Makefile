@@ -10,8 +10,6 @@ OBJS = cameratest.o camera.o
 all: cameratest
 
 .depend: $(OBJS:.o=.cpp) $(wildcard *.h) Makefile
-Print out some helpful information here.
-
 	rm -f .depend
 	$(CC) $(CFLAGS) -MM $(OBJS:.o=.cpp) >> ./.depend
 

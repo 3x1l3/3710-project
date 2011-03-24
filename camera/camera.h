@@ -21,6 +21,8 @@ class Camera {
     float yaxis_rotation_pos;
     float xaxis_rotation_pos;
     
+    float zaxis_pos;
+    
   public:
     Camera();
     ~Camera();
@@ -31,6 +33,7 @@ class Camera {
     void rotate_up(float);
     void rotate_down(float);
     void walk(int);
+    void translate();
   
 };
 
