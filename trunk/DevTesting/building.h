@@ -18,6 +18,7 @@ class Building
     Building(float x = 0, float y = 0, float z = 0);
     ~Building();
   
+    void SetColor(float, float, float);
     void SetOrigin(float, float, float);
     void SetScale(float, float, float);
     void Draw();
@@ -27,6 +28,7 @@ class Building
   private:
     float x, y, z;
     float xSize, ySize, zSize;
+    float _red, _green, _blue;
 };
 
 #endif

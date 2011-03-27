@@ -92,10 +92,7 @@ void CallBackRenderScene(void)
    //////////TESTING Drawing city block ///////////////////
    
    glPushMatrix();
-   
-   float blockX = 6;
-   float blockY = 0;
-   float blockZ = -6;
+  
    /*
    ///Draws ground area
    glTranslatef(blockX, blockY, blockZ);
@@ -133,7 +130,15 @@ void CallBackRenderScene(void)
    block->AddBuilding(bld);
    
    block->AddBuilding( new Building(-2.0, 0.0, -1.0) );
+   bld = new Building(3.0, 0.0, 4.0);
+   bld->SetScale(2.5, 1.0, 1.5);
+   block->AddBuilding(bld);
    
+   bld = new Building(1.0);
+   bld->SetScale(3.0, 3.0, 3.0);
+   block->AddBuilding(bld);
+   
+   block->SetOrigin(3.0, 0.0, -3.0);
    block->Draw();
    
    /*
