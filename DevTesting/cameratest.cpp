@@ -11,6 +11,8 @@
 #include <GL/glut.h> // GLUT support library.
 
 #include "camera.h"
+#include "building.h"
+#include "cityblock.h"
 
 // Some global variables.
 // Window IDs, window width and height.
@@ -78,13 +80,75 @@ void CallBackRenderScene(void)
    glTranslatef(0.25, 0.0, 0.0);
    glutSolidSphere(0.05, 15, 15);
    glPopMatrix();
+   
+   glPushMatrix();
    glTranslatef(0.0, 1, 0.0);
 
    glColor3f(0.2, 0.5, 0.5);
 
    glutSolidCube(0.5);
-
+   glPopMatrix();
  
+   //////////TESTING Drawing city block ///////////////////
+   
+   glPushMatrix();
+   
+   float blockX = 6;
+   float blockY = 0;
+   float blockZ = -6;
+   /*
+   ///Draws ground area
+   glTranslatef(blockX, blockY, blockZ);
+   
+   glColor3f(0.1, 0.1, 0.1);
+   glBegin(GL_QUADS);
+   glVertex3f(-5.0, 0.0, 5.0);
+   glVertex3f(5.0, 0.0, 5.0);
+   glVertex3f(5.0, 0.0, -5.0);
+   glVertex3f(-5.0, 0.0, -5.0);
+   glEnd();
+   */
+      ///Draw a building
+   float buildingX = 1.0;
+   float buildingY = 0.0;
+   float buildingZ = 0;
+   
+   float xSize = 1.0;
+   float ySize = 5.0;
+   float zSize = 1.0;
+   
+   /*
+   glPushMatrix();
+   glTranslatef(buildingX, buildingY/2, buildingZ);
+   glScalef(xSize, ySize, zSize);
+   glutSolidCube(1.0);
+   glPopMatrix();
+   */
+   
+   Building *bld = new Building();
+   bld->SetOrigin(buildingX, buildingY, buildingZ);
+   bld->SetScale(xSize, ySize, zSize);
+
+   CityBlock *block = new CityBlock();
+   block->AddBuilding(bld);
+   
+   block->AddBuilding( new Building(-2.0, 0.0, -1.0) );
+   
+   block->Draw();
+   
+   /*
+   ///Again
+   glPushMatrix();
+   glTranslatef(-2.0, 3.0, 3.0);
+   glScalef(1.5, 3.0, 1.0);
+   glutSolidCube(2.0);
+   glPopMatrix();
+   */
+   
+   glPopMatrix();
+   
+   ///////////////////////////////////////////////////////
+   
    // All done drawing.  Let's show it.
    glutSwapBuffers();
 
