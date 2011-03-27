@@ -29,7 +29,7 @@ void CityBlock::Draw()
    glPushMatrix();
    
    ///Draws ground area
-   glTranslatef(x_coord, z_coord, z_coord);
+   glTranslatef(x_coord, y_coord, z_coord);
    
    glColor3f(0.1, 0.1, 0.1);
    glBegin(GL_QUADS);
