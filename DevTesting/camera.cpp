@@ -13,6 +13,7 @@ Camera::Camera() {
   this->yaxis_rotation_pos = 0.0;
   this->xaxis_rotation_pos = 0.0;
   this->zaxis_pos = 0.0;
+  this->xaxis_pos = 0.0;
 }
 
 Camera::~Camera() {
@@ -21,15 +22,19 @@ Camera::~Camera() {
 }
 
 void Camera::lookat() {
+this->translate();
+  this->rotate(2);
+   
 
-   this->translate();
-    this->rotate(1);
-    this->rotate(2);
+   
    
   gluLookAt(this->eye_x, this->eye_y, this->eye_z,
 	    this->at_x, this->at_y, this->at_z,
 	    this->up_x, this->up_y, this->up_z);
-   
+   this->rotate(1);
+	    this->translate();
+	    
+	    
 }
 
 /*
@@ -51,11 +56,15 @@ void Camera::rotate(int axis) {
 
 }
 
-//think this will need to be done with a directional vector
-//
+
+// 1 = forward
+// 2 = backward
+// 3 = left
+// 4 = right
 
 void Camera::translate() {
- glTranslatef(0.0, 0.0, this->zaxis_pos); 
+  glTranslatef(this->xaxis_pos, 0.0, this->zaxis_pos);
+
 }
 
 void Camera::walk(int direction) {
@@ -67,6 +76,12 @@ void Camera::walk(int direction) {
     case 2:
       zaxis_pos -= 1;
     break;
+    case 4:
+      xaxis_pos -= 1;
+    break;
+    case 3:  
+      xaxis_pos += 1;
+    break;  
   }  
  
   

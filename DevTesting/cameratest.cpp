@@ -46,7 +46,7 @@ void CallBackRenderScene(void)
    // Move back to the origin
    glLoadIdentity();
    
-   
+   glTranslatef(3.0, 0.0, 0.0);
    camera->lookat();
    /*
    gluLookAt(3.0, 3.0, 3.0, 
@@ -168,22 +168,22 @@ void CallBackRenderScene(void)
 void myCBKey(unsigned char key, int x, int y)
 {
    switch (key) {
-     case 97:
+     case 119: //forward w
       camera->walk(1);
      break;
-    case 122:
+    case 115: //backward s
       camera->walk(2);
      break;
-    case 61:
-      
+    case 97: //left a
+      camera->walk(3);
       break;
-    case 45:
-      
+    case 100: //right d
+      camera->walk(4);
       break;
       
     }
     
-    printf("%d", key);
+    //printf("%d", key);
 }
 
 void mySCBKey(int key, int x, int y) {
