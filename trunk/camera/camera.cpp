@@ -22,14 +22,15 @@ Camera::~Camera() {
 
 void Camera::lookat() {
 
-   this->translate();
-    this->rotate(1);
-    this->rotate(2);
-   
+    
+    this->translate();
   gluLookAt(this->eye_x, this->eye_y, this->eye_z,
 	    this->at_x, this->at_y, this->at_z,
 	    this->up_x, this->up_y, this->up_z);
-   
+  
+    
+    this->rotate(2);
+    this->rotate(1);
 }
 
 /*

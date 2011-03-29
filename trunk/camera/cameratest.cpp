@@ -114,7 +114,7 @@ void myCBKey(unsigned char key, int x, int y)
       
     }
     
-    printf("%d", key);
+    //printf("%d", key);
 }
 
 void mySCBKey(int key, int x, int y) {
