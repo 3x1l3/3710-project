@@ -5,6 +5,8 @@
 #include <GL/gl.h>   // OpenGL itself.
 #include <GL/glu.h>  // GLU support library.
 #include <GL/glut.h> // GLUT support library.
+#include <math.h>
+
 using std::cout;
 using std::endl;
 class Camera {
@@ -22,20 +24,29 @@ class Camera {
     float yaxis_rotation_pos;
     float xaxis_rotation_pos;
     
-    float zaxis_pos;
-    float xaxis_pos;
+    
     
   public:
     Camera();
+    Camera(float, float, float, float, float, float);
     ~Camera();
     void lookat();
-    void rotate(int);
     void rotate_right(float);
     void rotate_left(float);
     void rotate_up(float);
     void rotate_down(float);
     void walk(int);
-    void translate();
+    
+    float getAt_y();
+    float getAt_x();
+    float getAt_z();
+    
+    float getEye_x();
+    float getEye_y();
+    float getEye_z();
+    
+    float getYAngle();
+   
   
 };
 

@@ -5,7 +5,7 @@ COMPILERFLAGS = -Wall -g
 CC = g++
 CFLAGS = $(COMPILERFLAGS) $(INCLUDE)
 LIBRARIES = -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm
-OBJS = cameratest.o camera.o building.o cityblock.o
+OBJS = cameratest.o camera.o building.o cityblock.o robot.o
 
 all: cameratest
 

@@ -1,4 +1,5 @@
-cameratest.o: cameratest.cpp camera.h building.h cityblock.h
+cameratest.o: cameratest.cpp camera.h building.h cityblock.h robot.h
 camera.o: camera.cpp camera.h
 building.o: building.cpp building.h
 cityblock.o: cityblock.cpp cityblock.h building.h
+robot.o: robot.cpp robot.h
