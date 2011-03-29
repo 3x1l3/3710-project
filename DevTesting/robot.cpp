@@ -43,6 +43,20 @@ void Robot::antenna_rotate() {
   else
       this->antenna_angle += 0.5;
 }
+void Robot::turnHeadLeft()
+{
+  this->head_angle = 90;
+}
+void Robot::turnHeadRight()
+{
+  this->head_angle = -90;
+}
+
+void Robot::turnHeadForward()
+{
+  this->head_angle = 0;
+}
+
 
 void Robot::draw()
 {
@@ -78,6 +92,7 @@ void Robot::draw()
    
    //eyes
    glPushMatrix();
+   glRotatef(this->head_angle, 0.0, 1.0, 0.0);
    glTranslatef(-0.10, 1.1, 0.3);
    glutSolidSphere(0.05, 15, 15);
    glTranslatef(0.25, 0.0, 0.0);
@@ -86,8 +101,11 @@ void Robot::draw()
    
    //head
    glPushMatrix();
+   
    glTranslatef(0.0, 1, 0.0);
+   
    glColor3f(0.2, 0.5, 0.5);
+   glRotatef(this->head_angle, 0.0, 1.0, 0.0);
    glutSolidCube(0.5);
    glPopMatrix();
   

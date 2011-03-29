@@ -155,13 +155,25 @@ void myCBKey(unsigned char key, int x, int y)
       
     }
     
-    //printf("%d", key);
+    
 }
 
 void mySCBKey(int key, int x, int y) {
   
   switch (key)
   {
+    case 1: //F1
+      
+      robot->turnHeadForward();
+      break;
+    case 2: //F2
+    robot->turnHeadRight();
+      break;
+    case 3: //F3
+      robot->turnHeadLeft();
+      
+      break;
+    
     case 102:
      // camera->rotate_right(0.1);
     break;
@@ -177,7 +189,7 @@ void mySCBKey(int key, int x, int y) {
     
   }
   
- // printf("%d", key);
+ printf("%d", key);
   
 }
 
