@@ -1,86 +1,103 @@
 #include "camera.h"
 
 Camera::Camera() {
-  this->eye_x = 5.0;
-  this->eye_y = 5.0;
+  this->eye_x = 0.0;
+  this->eye_y = 1.0;
   this->eye_z = 5.0;
   this->at_x = 0.0;
   this->at_y = 0.0;
-  this->at_z = 0.0;
+  this->at_z = -1.0;
   this->up_x = 0.0;
   this->up_y = 1.0;
   this->up_z = 0.0;
+  
   this->yaxis_rotation_pos = 0.0;
   this->xaxis_rotation_pos = 0.0;
-  this->zaxis_pos = 0.0;
-  this->xaxis_pos = 0.0;
+  
 }
+
+Camera::Camera(float eyex, float eyey, float eyez, float atx, float aty, float atz)
+{
+  this->eye_x = eyex;
+  this->eye_y = eyey;
+  this->eye_z = eyez;
+  this->at_x = atx;
+  this->at_y = aty;
+  this->at_z = atz;
+  this->up_x = 0.0;
+  this->up_y = 1.0;
+  this->up_z = 0.0;
+  
+  this->yaxis_rotation_pos = 0.0;
+  this->xaxis_rotation_pos = 0.0;
+}
+
+
 
 Camera::~Camera() {
 
 
 }
 
+float Camera::getYAngle() {
+ return this->yaxis_rotation_pos; 
+}
+
+float Camera::getAt_y() {
+  return this->at_y;
+}
+
+float Camera::getAt_x() {
+  return this->at_x;
+}
+
+float Camera::getAt_z() {
+  
+ return this->at_z; 
+}
+
+
+float Camera::getEye_x() {
+ return this->eye_x; 
+}
+
+float Camera::getEye_y() {
+ return this->eye_y;
+}
+
+float Camera::getEye_z() {
+ return this->eye_z; 
+}
+
 void Camera::lookat() {
-this->translate();
-  this->rotate(2);
-   
 
-   
-   
   gluLookAt(this->eye_x, this->eye_y, this->eye_z,
-	    this->at_x, this->at_y, this->at_z,
+	    this->eye_x+this->at_x, this->eye_y+this->at_y, this->eye_z+this->at_z,
 	    this->up_x, this->up_y, this->up_z);
-   this->rotate(1);
-	    this->translate();
-	    
 	    
 }
 
-/*
-  Rotation by angle and direction
-  yaxis = 1, xaxis = 2
-*/
-void Camera::rotate(int axis) {
 
- switch (axis) {
-   case 1:
-     glRotatef(this->yaxis_rotation_pos, 0.0, 1.0, 0.0);
-    break;
-   case 2:
-     glRotatef(this->xaxis_rotation_pos, 1.0, 0.0, 0.0);
-     break;
- }
- 
- 
-
-}
-
-
-// 1 = forward
-// 2 = backward
-// 3 = left
-// 4 = right
-
-void Camera::translate() {
-  glTranslatef(this->xaxis_pos, 0.0, this->zaxis_pos);
-
-}
 
 void Camera::walk(int direction) {
  
   switch (direction) {
     case 1:
-      zaxis_pos += 1;
+      this->eye_x += this->at_x * 1.0;
+      this->eye_z += this->at_z * 1.0;
+      
     break;
     case 2:
-      zaxis_pos -= 1;
+     this->eye_x -= this->at_x * 1.0;
+     this->eye_z -= this->at_z * 1.0; 
+     
     break;
     case 4:
-      xaxis_pos -= 1;
+     
+      
     break;
     case 3:  
-      xaxis_pos += 1;
+    
     break;  
   }  
  
@@ -89,19 +106,23 @@ void Camera::walk(int direction) {
 
 
 void Camera::rotate_right(float angle) {
-  if(this->yaxis_rotation_pos >= 360) {
-      this->yaxis_rotation_pos = static_cast<int>(this->yaxis_rotation_pos) % 360;
-  } else {
+
    this->yaxis_rotation_pos += angle; 
-  }
+  this->at_x = sin(yaxis_rotation_pos);
+  this->at_z = -cos(yaxis_rotation_pos);
+
 }
 
 void Camera::rotate_left(float angle) {
-    if(this->yaxis_rotation_pos <= 0) {
-      this->yaxis_rotation_pos = 360 - this->yaxis_rotation_pos;
-  } else {
    this->yaxis_rotation_pos -= angle; 
-  }
+  this->at_x = sin(yaxis_rotation_pos);
+  this->at_z = -cos(yaxis_rotation_pos);
+  
+    
+  
+  
+  
+  
 }
 
 void Camera::rotate_down(float angle) {

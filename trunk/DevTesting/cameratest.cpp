@@ -13,6 +13,11 @@
 #include "camera.h"
 #include "building.h"
 #include "cityblock.h"
+#include "math.h"
+#include "robot.h"
+
+using std::cout;
+using std::endl;
 
 // Some global variables.
 // Window IDs, window width and height.
@@ -27,8 +32,8 @@ float X_Speed = 0.0f;  // the rotation.
 float Y_Speed = 0.0f;
 float Z_Off   =-5.0f;
 
-Camera* camera = new Camera();
-
+Camera* camera = new Camera(0.0, 2.0, 5.0, 0.0, 0.0, -1.0);
+Robot* robot = new Robot();
 
 /////////////////////////////////////////////////////////
 // Routine which actually does the drawing             //
@@ -46,48 +51,21 @@ void CallBackRenderScene(void)
    // Move back to the origin
    glLoadIdentity();
    
-   glTranslatef(3.0, 0.0, 0.0);
+   
    camera->lookat();
    /*
    gluLookAt(3.0, 3.0, 3.0, 
 	     0.0, 0.0, 0.0, 
 	     0.0, 1.0, 0.0);
    */
+    robot->setX(camera->getEye_x());
+    robot->setY(camera->getEye_y()-1);
+    robot->setZ(camera->getEye_z()-5);
+    robot->draw();
    
-   GLUquadric* quad = gluNewQuadric();
-   glPushMatrix();
-   glScalef(0.75, 1.0, 0.75);
-   glutSolidCube(1);
-   glPopMatrix();
+  
    
-   glPushMatrix();
-   glTranslatef(0.0, 1.0, 0.0);
-   glRotatef(90, 1.0, 0.0, 0.0);
-   gluCylinder(quad, 0.25, 0.25, 0.5, 100, 100);
-   glPopMatrix();
-   
-   glPushMatrix();
-   glTranslatef(0.0, 1.4, 0.0);
-   glRotatef(90, 1.0, 0.0, 0.0);
-   glColor3f(0.2, 0.2, 0.5);
-   gluCylinder(quad, 0.1, 0.1, 0.2, 100, 100);
-   glPopMatrix();
-   
-   
-   glPushMatrix();
-   glTranslatef(-0.10, 1.1, 0.3);
-   glutSolidSphere(0.05, 15, 15);
-   glTranslatef(0.25, 0.0, 0.0);
-   glutSolidSphere(0.05, 15, 15);
-   glPopMatrix();
-   
-   glPushMatrix();
-   glTranslatef(0.0, 1, 0.0);
-
-   glColor3f(0.2, 0.5, 0.5);
-
-   glutSolidCube(0.5);
-   glPopMatrix();
+  
  
    //////////TESTING Drawing city block ///////////////////
    
@@ -156,12 +134,6 @@ void CallBackRenderScene(void)
    
    // All done drawing.  Let's show it.
    glutSwapBuffers();
-
-   // Now let's do the motion calculations.
-   //X_Rot+=X_Speed; 
-   //Y_Rot+=Y_Speed;
-   X_Rot+=0.05f;
-   Y_Rot+=0.05f;
 }
 
 
@@ -191,10 +163,10 @@ void mySCBKey(int key, int x, int y) {
   switch (key)
   {
     case 102:
-      camera->rotate_right(0.5);
+     // camera->rotate_right(0.1);
     break;
     case 100:
-      camera->rotate_left(0.5);
+      //camera->rotate_left(0.1);
       break;
     case 101: //up
       camera->rotate_up(0.5);
@@ -310,13 +282,14 @@ int main(int argc, char **argv)
 
    // OK, OpenGL's ready to go.  Let's call our own init function.
    MyInit(Window_Width, Window_Height);
-
+   
    // Print out a bit of help dialog.
+   /*
    printf("\n%s\n\n", PROGRAM_TITLE);
    printf("Print out some helpful information here.\n");
    printf("When you program, you can also use\n");
    printf("printf to do debugging.\n\n");
-
+*/
    // Above functions represents those you will do to set up your
    // application program.
    // Now pass off control to OpenGL.
