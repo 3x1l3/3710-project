@@ -11,6 +11,7 @@ class Robot {
     float pos_z;
     
     float antenna_angle;
+    float head_angle;
     void antenna_rotate();
     
   public:
@@ -22,6 +23,9 @@ class Robot {
     void setX(float);
     void setY(float);
     void setZ(float);
+    void turnHeadLeft();
+    void turnHeadRight();
+    void turnHeadForward();
     
     
   
