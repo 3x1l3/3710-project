@@ -93,11 +93,11 @@ void Camera::walk(int direction) {
      
     break;
     case 4:
-     
+     rotate_right(0.1);
       
     break;
     case 3:  
-    
+     rotate_left(0.1);
     break;  
   }  
  

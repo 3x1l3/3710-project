@@ -145,7 +145,7 @@ void CallBackRenderScene(void)
      { 
        b = new CityBlock();
        *b = *block;
-       b->SetOrigin( i * 13, 0, j * 13  );
+       b->SetOrigin( i * 15, 0, j * 15  );
        city->AddCityBlock( b );
      }
    }
