@@ -47,6 +47,42 @@ void CityBlock::Draw()
    glEnd();
    //glPopAttrib();
    
+   //drawing the right side street
+   glColor3f(1.0, 1.0, 0.1);
+   glBegin(GL_QUADS);
+   glVertex3f(5.0, 0.0, 10.0);
+   glVertex3f(10.0, 0.0, 10.0);
+   glVertex3f(10.0, 0.0, -10.0);
+   glVertex3f(5.0, 0.0, -10.0);
+   glEnd();
+   
+   //drawing the left side street
+   glColor3f(1.0, 1.0, 0.1);
+   glBegin(GL_QUADS);
+   glVertex3f(-10.0, 0.0, 10.0);
+   glVertex3f(-5.0, 0.0, 10.0);
+   glVertex3f(-5.0, 0.0, -10.0);
+   glVertex3f(-10.0, 0.0, -10.0);
+   glEnd();
+   
+   //drawing the top street
+   glColor3f(1.0, 1.0, 0.1);
+   glBegin(GL_QUADS);
+   glVertex3f(-5.0, 0.0, 10.0);
+   glVertex3f(5.0, 0.0, 10.0);
+   glVertex3f(5.0, 0.0, 5.0);
+   glVertex3f(-5.0, 0.0, 5.0);
+   glEnd();
+   
+   //drawing the bottom side street
+   glColor3f(1.0, 1.0, 0.1);
+   glBegin(GL_QUADS);
+   glVertex3f(-5.0, 0.0, -5.0);
+   glVertex3f(5.0, 0.0, -5.0);
+   glVertex3f(5.0, 0.0, -10.0);
+   glVertex3f(-5.0, 0.0, -10.0);
+   glEnd();
+   
    for(unsigned i = 0; i < buildings.size(); i++)
    {
      glColor3f( buildings.at(i)->GetRed(), buildings.at(i)->GetGreen(), buildings.at(i)->GetBlue() );
