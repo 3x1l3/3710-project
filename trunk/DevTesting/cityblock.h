@@ -19,6 +19,11 @@ class CityBlock
   void Draw();
   void SetOrigin(float x, float y, float z);
     
+  CityBlock& operator=(const CityBlock &righthand);
+  bool operator==(const CityBlock &righthand);
+  
+  Building* BuildingAt(int index);
+  
   private:
     //Coordinates are for the center of the city block
     int x_coord, y_coord, z_coord;

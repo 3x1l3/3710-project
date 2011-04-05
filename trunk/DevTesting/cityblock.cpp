@@ -24,6 +24,12 @@ void CityBlock::AddBuilding(Building* bld)
   buildings.push_back(bld);
 }
 
+Building* CityBlock::BuildingAt(int index)
+{
+  return buildings.at(index);
+}
+
+
 void CityBlock::Draw()
 {
    glPushMatrix();
@@ -57,3 +63,36 @@ void CityBlock::SetOrigin(float x, float y, float z)
   y_coord = y;
   z_coord = z;
 }
+
+CityBlock& CityBlock::operator=(const CityBlock& righthand)
+{
+  if(*this == righthand)  //Avoid self assignment
+    return *this;
+  
+  this->x_coord = righthand.x_coord;
+  this->y_coord = righthand.y_coord;
+  this->z_coord = righthand.z_coord;
+  
+  for(unsigned i = 0; i < righthand.buildings.size(); i++)
+  {
+    this->AddBuilding( righthand.buildings.at(i) );
+  }
+  
+  return *this;
+}
+
+bool CityBlock::operator==(const CityBlock& righthand)
+{
+  if(this->x_coord == righthand.x_coord
+    && this->y_coord == righthand.y_coord
+    && this->z_coord == righthand.z_coord
+    && this->buildings == righthand.buildings)
+  {
+    return true;
+  }
+    
+  return false;
+}
+
+
+

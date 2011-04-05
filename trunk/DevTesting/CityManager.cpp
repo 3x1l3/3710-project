@@ -25,6 +25,12 @@ void CityManager::AddCityBlock(CityBlock* newBlock)
   cityBlocks.push_back(newBlock);
 }
 
+CityBlock* CityManager::BlockAt(int index)
+{
+  return cityBlocks.at(index);
+}
+
+
 void CityManager::Draw()
 {
    glPushMatrix();
