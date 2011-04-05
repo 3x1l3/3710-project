@@ -33,7 +33,7 @@ float X_Speed = 0.0f;  // the rotation.
 float Y_Speed = 0.0f;
 float Z_Off   =-5.0f;
 
-int roadWidth = 1.0f;
+int roadWidth = 5.0f;
 
 Camera* camera = new Camera(0.0, 2.0, 5.0, 0.0, 0.0, -1.0);
 Robot* robot = new Robot();
