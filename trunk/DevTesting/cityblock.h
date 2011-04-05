@@ -18,6 +18,7 @@ class CityBlock
   void AddBuilding(Building* bld);
   void Draw();
   void SetOrigin(float x, float y, float z);
+  void setRoadWidth(int newWidth);
     
   CityBlock& operator=(const CityBlock &righthand);
   bool operator==(const CityBlock &righthand);
@@ -27,6 +28,7 @@ class CityBlock
   private:
     //Coordinates are for the center of the city block
     int x_coord, y_coord, z_coord;
+    int roadWidth;
     vector<Building*> buildings;
 
 };

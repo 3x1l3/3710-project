@@ -20,12 +20,14 @@ class CityManager
   void AddCityBlock(CityBlock* newBlock);
   void Draw();
   void SetOrigin(float x, float y, float z);
+  void setRoadWidth(int newWidth);
   
   CityBlock* BlockAt(int index);
     
   private:
     //coordinates for the center of the City
     int x_coord, y_coord, z_coord;
+    int roadWidth;
     vector<CityBlock*> cityBlocks;
 
 };
