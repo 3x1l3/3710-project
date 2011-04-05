@@ -3,6 +3,9 @@
 #include <GL/gl.h>   // OpenGL itself.
 #include <GL/glu.h>  // GLU support library.
 #include <GL/glut.h> // GLUT support library.
+#include <iostream>
+using std::cout;
+using std::endl;
 class Robot {
   
   private:
@@ -12,6 +15,8 @@ class Robot {
     
     float antenna_angle;
     float head_angle;
+    float prev_head_angle;
+    int head_position;
     void antenna_rotate();
     
   public:
@@ -26,6 +31,7 @@ class Robot {
     void turnHeadLeft();
     void turnHeadRight();
     void turnHeadForward();
+    void head_rotate();
     
     
   

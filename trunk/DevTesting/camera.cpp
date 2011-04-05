@@ -27,7 +27,7 @@ Camera::Camera(float eyex, float eyey, float eyez, float atx, float aty, float a
   this->up_x = 0.0;
   this->up_y = 1.0;
   this->up_z = 0.0;
-  
+  this->eyefromat = 5;
   this->yaxis_rotation_pos = 0.0;
   this->xaxis_rotation_pos = 0.0;
 }
@@ -72,7 +72,7 @@ float Camera::getEye_z() {
 void Camera::lookat() {
 
   gluLookAt(this->eye_x, this->eye_y, this->eye_z,
-	    this->eye_x+this->at_x, this->eye_y+this->at_y, this->eye_z+this->at_z,
+	    eye_x+this->at_x, eye_y+this->at_y, eye_z+this->at_z,
 	    this->up_x, this->up_y, this->up_z);
 	    
 }
@@ -84,12 +84,17 @@ void Camera::walk(int direction) {
   switch (direction) {
     case 1:
       this->eye_x += this->at_x * 1.0;
+     // this->at_x += this->eye_x;
+      
       this->eye_z += this->at_z * 1.0;
+     // this->at_z += this->eye_z;
       
     break;
     case 2:
      this->eye_x -= this->at_x * 1.0;
      this->eye_z -= this->at_z * 1.0; 
+//      this->at_x += this->eye_x;
+//      this->at_z += this->eye_z;
      
     break;
     case 4:

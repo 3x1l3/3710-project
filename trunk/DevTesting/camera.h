@@ -20,7 +20,7 @@ class Camera {
     float up_x;
     float up_y;
     float up_z;
-    
+    float eyefromat;
     float yaxis_rotation_pos;
     float xaxis_rotation_pos;
     

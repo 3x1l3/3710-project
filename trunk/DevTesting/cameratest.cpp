@@ -59,9 +59,9 @@ void CallBackRenderScene(void)
 	     0.0, 0.0, 0.0, 
 	     0.0, 1.0, 0.0);
    */
-    robot->setX(camera->getEye_x());
-    robot->setY(camera->getEye_y()-1);
-    robot->setZ(camera->getEye_z()-5);
+    robot->setX(camera->getEye_x()+camera->getAt_x());
+    robot->setY(camera->getEye_y()+camera->getAt_y()-1);
+    robot->setZ(camera->getEye_z()+camera->getAt_z()-5);
     robot->draw();
    
   
@@ -199,10 +199,10 @@ void mySCBKey(int key, int x, int y) {
       break;
     
     case 102:
-     // camera->rotate_right(0.1);
+     camera->rotate_right(0.1);
     break;
     case 100:
-      //camera->rotate_left(0.1);
+      camera->rotate_left(0.1);
       break;
     case 101: //up
       camera->rotate_up(0.5);
