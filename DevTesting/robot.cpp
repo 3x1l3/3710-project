@@ -43,24 +43,50 @@ void Robot::antenna_rotate() {
   else
       this->antenna_angle += 0.5;
 }
+
+void Robot::head_rotate() {
+
+  switch(this->head_position) {
+    case 1:
+      if (this->head_angle <= 90)
+	this->head_angle += 0.5;
+      break;
+    case 2:
+      if (this->head_angle >= -90)
+      this->head_angle -= 0.5;
+      break;
+      
+    case 3:
+      if (this->head_angle > 0)
+	this->head_angle -= 0.5;
+      else if (this->head_angle < 0)
+	this->head_angle += 0.5;
+      break;
+    
+  }
+  
+ 
+}
+
 void Robot::turnHeadLeft()
 {
-  this->head_angle = 90;
+  this->head_position = 1;
 }
 void Robot::turnHeadRight()
 {
-  this->head_angle = -90;
+  this->head_position = 2;
 }
 
 void Robot::turnHeadForward()
 {
-  this->head_angle = 0;
+  this->head_position = 3;
 }
 
 
 void Robot::draw()
 {
   this->antenna_rotate();
+  this->head_rotate();
   
  GLUquadric* quad = gluNewQuadric();
    glPushMatrix();
