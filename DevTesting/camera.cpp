@@ -20,7 +20,7 @@ Camera::Camera(float eyex, float eyey, float eyez, float atx, float aty, float a
 {
   this->eye_x = eyex;
   this->eye_y = eyey;
-  this->eye_z = eyez;//
+  this->eye_z = eyez;
   this->at_x = atx;
   this->at_y = aty;
   this->at_z = atz;
