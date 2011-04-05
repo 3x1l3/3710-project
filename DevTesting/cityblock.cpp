@@ -31,16 +31,19 @@ void CityBlock::Draw()
    ///Draws ground area
    glTranslatef(x_coord, y_coord, z_coord);
    
-   glColor3f(0.1, 0.1, 0.1);
+   //glPushAttrib(GL_CURRENT_COLOR);
+   glColor3f(0.1, 0.68, 0.1);
    glBegin(GL_QUADS);
    glVertex3f(-5.0, 0.0, 5.0);
    glVertex3f(5.0, 0.0, 5.0);
    glVertex3f(5.0, 0.0, -5.0);
    glVertex3f(-5.0, 0.0, -5.0);
    glEnd();
+   //glPopAttrib();
    
    for(unsigned i = 0; i < buildings.size(); i++)
    {
+     glColor3f( buildings.at(i)->GetRed(), buildings.at(i)->GetGreen(), buildings.at(i)->GetBlue() );
      buildings.at(i)->Draw();
    }
    

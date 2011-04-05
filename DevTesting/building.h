@@ -23,6 +23,11 @@ class Building
     void SetScale(float, float, float);
     void Draw();
     
+    float GetRed();
+    float GetGreen();
+    float GetBlue();
+    
+    
   protected:
 	
   private:

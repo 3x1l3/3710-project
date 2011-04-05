@@ -5,7 +5,7 @@ COMPILERFLAGS = -Wall -g
 CC = g++
 CFLAGS = $(COMPILERFLAGS) $(INCLUDE)
 LIBRARIES = -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm
-OBJS = cameratest.o camera.o building.o cityblock.o robot.o
+OBJS = cameratest.o camera.o building.o cityblock.o CityManager.o robot.o
 
 all: cameratest
 
@@ -19,6 +19,8 @@ cameratest: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^  $(LIBDIR) $(LIBRARIES)
 
 cityblock.o : building.o
+
+CityManager.o : cityblock.o
 
 %.o : %.cpp
 	$(CC) $(CFLAGS) -c $<

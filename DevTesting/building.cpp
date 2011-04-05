@@ -16,7 +16,7 @@ Building::Building(float x, float y, float z)
   
   _red = 0.3;
   _green = 0.3;
-  _blue = 0.3;
+  _blue = 0.36;
   
 }
 
@@ -50,10 +50,27 @@ void Building::Draw()
    glPopMatrix();
 }
 
+///   COLOR METHODS   ///
+
 void Building::SetColor(float r , float g , float b )
 {
   _red = r;
   _green = g;
   _blue = b;
+}
+
+float Building::GetBlue()
+{
+  return _blue;
+}
+
+float Building::GetGreen()
+{
+  return _green;
+}
+
+float Building::GetRed()
+{
+  return _red;
 }
 
