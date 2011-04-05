@@ -11,6 +11,8 @@ CityManager::CityManager()
   y_coord = 0;
   z_coord = 0;
   
+  roadWidth = 5;
+  
   cityBlocks.clear();
   
 }
@@ -19,7 +21,10 @@ CityManager::~CityManager()
 {
 
 }
-
+void CityManager::setRoadWidth(int newWidth)
+{
+  roadWidth = newWidth;
+}
 void CityManager::AddCityBlock(CityBlock* newBlock)
 {
   cityBlocks.push_back(newBlock);
@@ -41,6 +46,7 @@ void CityManager::Draw()
    
    for(unsigned i = 0; i < cityBlocks.size(); i++)
    {
+     cityBlocks[i]->setRoadWidth(roadWidth);
      cityBlocks.at(i)->Draw();
    }
    

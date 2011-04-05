@@ -33,6 +33,8 @@ float X_Speed = 0.0f;  // the rotation.
 float Y_Speed = 0.0f;
 float Z_Off   =-5.0f;
 
+int roadWidth = 1.0f;
+
 Camera* camera = new Camera(0.0, 2.0, 5.0, 0.0, 0.0, -1.0);
 Robot* robot = new Robot();
 
@@ -122,7 +124,7 @@ void CallBackRenderScene(void)
    bld->SetColor(0, 7.0, 6.7);
    block->AddBuilding(bld);
    
-   bld = new Building(-3.7, 0.0, 4.6);
+   bld = new Building(-3.7, 0.0, 4.0);
    bld->SetScale(1.8, 4.0, 1.4);
    block->AddBuilding(bld);
       
@@ -145,11 +147,11 @@ void CallBackRenderScene(void)
      { 
        b = new CityBlock();
        *b = *block;
-       b->SetOrigin( i * 15, 0, j * 15  );
+       b->SetOrigin( i * (10+roadWidth), 0, j * (10+roadWidth)  );
        city->AddCityBlock( b );
      }
    }
-   
+   city->setRoadWidth(roadWidth);
    city->Draw();
    
    glPopMatrix();
