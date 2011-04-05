@@ -116,6 +116,15 @@ void CallBackRenderScene(void)
    bld = new Building(1.0);
    bld->SetScale(3.0, 3.0, 3.0);
    block->AddBuilding(bld);
+   
+   bld = new Building(-4.0, 0.0, 4.0);
+   bld->SetScale(0.5, 7.0, 0.5);
+   bld->SetColor(0, 7.0, 6.7);
+   block->AddBuilding(bld);
+   
+   bld = new Building(-3.7, 0.0, 4.6);
+   bld->SetScale(1.8, 4.0, 1.4);
+   block->AddBuilding(bld);
       
    /*
    ///Again
@@ -132,7 +141,7 @@ void CallBackRenderScene(void)
    CityBlock *b;
    for(int i = 0; i < 20; i++)
    {
-     for(int j = i; j < 20; j++)
+     for(int j = 0; j < 20; j++)
      { 
        b = new CityBlock();
        *b = *block;
