@@ -106,26 +106,17 @@ void CallBackRenderScene(void)
    bld->SetScale(xSize, ySize, zSize);
 
    CityBlock *block = new CityBlock();
-   CityBlock *block2 = new CityBlock();
    block->AddBuilding(bld);
-   block2->AddBuilding(bld);
    
    block->AddBuilding( new Building(-2.0, 0.0, -1.0) );
-   block2->AddBuilding( new Building(-2.0, 0.0, -1.0) );
    bld = new Building(3.0, 0.0, 4.0);
    bld->SetScale(2.5, 1.0, 1.5);
    block->AddBuilding(bld);
-   block2->AddBuilding(bld);
    
    bld = new Building(1.0);
    bld->SetScale(3.0, 3.0, 3.0);
    block->AddBuilding(bld);
-   block2->AddBuilding(bld);
-   
-   block->SetOrigin(3.0, 0.0, -3.0);
-   block->SetOrigin(3.0, 0.0, -15.0);
-   //block->Draw();
-   
+      
    /*
    ///Again
    glPushMatrix();
@@ -137,8 +128,18 @@ void CallBackRenderScene(void)
    
    
    CityManager *city = new CityManager(); 
-   city->AddCityBlock( block );
-   city->AddCityBlock(block2);
+   
+   CityBlock *b;
+   for(int i = 0; i < 20; i++)
+   {
+     for(int j = i; j < 20; j++)
+     { 
+       b = new CityBlock();
+       *b = *block;
+       b->SetOrigin( i * 13, 0, j * 13  );
+       city->AddCityBlock( b );
+     }
+   }
    
    city->Draw();
    

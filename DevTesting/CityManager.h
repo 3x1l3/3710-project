@@ -20,6 +20,8 @@ class CityManager
   void AddCityBlock(CityBlock* newBlock);
   void Draw();
   void SetOrigin(float x, float y, float z);
+  
+  CityBlock* BlockAt(int index);
     
   private:
     //coordinates for the center of the City
