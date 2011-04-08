@@ -3,6 +3,7 @@
 ///\date Mar 27
 
 #include "cityblock.h"
+int SIZE = 15;
 
 CityBlock::CityBlock()
 {
@@ -10,7 +11,7 @@ CityBlock::CityBlock()
   y_coord = 0;
   z_coord = 0;
   
-  roadWidth = 5;
+  roadWidth = SIZE / 2;
   
   buildings.clear();
   
@@ -47,48 +48,50 @@ void CityBlock::Draw()
    //glPushAttrib(GL_CURRENT_COLOR);
    glColor3f(0.1, 0.68, 0.1);
    glBegin(GL_QUADS);
-   glVertex3f(-5.0, 0.0, 5.0);
-   glVertex3f(5.0, 0.0, 5.0);
-   glVertex3f(5.0, 0.0, -5.0);
-   glVertex3f(-5.0, 0.0, -5.0);
+   glVertex3f(-15.0, 0.0, 15.0);
+   glVertex3f(15.0, 0.0, 15.0);
+   glVertex3f(15.0, 0.0, -15.0);
+   glVertex3f(-15.0, 0.0, -15.0);
    glEnd();
    //glPopAttrib();
-   
+   /*
    //drawing the right side street
    glColor3f(1.0, 1.0, 0.1);
    glBegin(GL_QUADS);
-   glVertex3f(5.0, 0.0, 5.0+roadWidth);
-   glVertex3f(5.0+roadWidth, 0.0, 5.0+roadWidth);
-   glVertex3f(5.0+roadWidth, 0.0, -5.0-roadWidth);
-   glVertex3f(5.0, 0.0, -5.0-roadWidth);
+   glVertex3f(SIZE, 0.0, SIZE+roadWidth);
+   glVertex3f(SIZE+roadWidth, 0.0, SIZE+roadWidth);
+   glVertex3f(SIZE+roadWidth, 0.0, -SIZE-roadWidth);
+   glVertex3f(SIZE, 0.0, -SIZE-roadWidth);
    glEnd();
    
    //drawing the left side street
    glColor3f(1.0, 1.0, 0.1);
    glBegin(GL_QUADS);
-   glVertex3f(-5.0-roadWidth, 0.0, 5.0+roadWidth);
-   glVertex3f(-5.0, 0.0, 5.0+roadWidth);
-   glVertex3f(-5.0, 0.0, -5.0-roadWidth);
-   glVertex3f(-5.0-roadWidth, 0.0, -5.0-roadWidth);
+   glVertex3f(-SIZE-roadWidth, 0.0, SIZE+roadWidth);
+   glVertex3f(-SIZE, 0.0, SIZE+roadWidth);
+   glVertex3f(-SIZE, 0.0, -SIZE-roadWidth);
+   glVertex3f(-SIZE-roadWidth, 0.0, -SIZE-roadWidth);
    glEnd();
    
    //drawing the top street
    glColor3f(1.0, 1.0, 0.1);
    glBegin(GL_QUADS);
-   glVertex3f(-5.0, 0.0, 5.0+roadWidth);
-   glVertex3f(5.0, 0.0, 5.0+roadWidth);
-   glVertex3f(5.0, 0.0, 5.0);
-   glVertex3f(-5.0, 0.0, 5.0);
+   glVertex3f(-SIZE, 0.0, SIZE+roadWidth);
+   glVertex3f(SIZE, 0.0, SIZE+roadWidth);
+   glVertex3f(SIZE, 0.0, SIZE);
+   glVertex3f(-SIZE, 0.0, SIZE);
    glEnd();
    
    //drawing the bottom side street
    glColor3f(1.0, 1.0, 0.1);
    glBegin(GL_QUADS);
-   glVertex3f(-5.0, 0.0, -5.0);
-   glVertex3f(5.0, 0.0, -5.0);
-   glVertex3f(5.0, 0.0, -5.0-roadWidth);
-   glVertex3f(-5.0, 0.0, -5.0-roadWidth);
+   glVertex3f(-SIZE, 0.0, -SIZE);
+   glVertex3f(SIZE, 0.0, -SIZE);
+   glVertex3f(SIZE, 0.0, -SIZE-roadWidth);
+   glVertex3f(-SIZE, 0.0, -SIZE-roadWidth);
    glEnd();
+   
+*/
    
    for(unsigned i = 0; i < buildings.size(); i++)
    {
