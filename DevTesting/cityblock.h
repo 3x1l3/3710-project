@@ -23,6 +23,10 @@ class CityBlock
   CityBlock& operator=(const CityBlock &righthand);
   bool operator==(const CityBlock &righthand);
   
+  void setID(int newID);
+  int getID();
+  int getBuildingCount();
+  
   Building* BuildingAt(int index);
   
   private:
@@ -30,7 +34,8 @@ class CityBlock
     int x_coord, y_coord, z_coord;
     int roadWidth;
     vector<Building*> buildings;
-
+    int blockID;
+    
 };
 
 #endif

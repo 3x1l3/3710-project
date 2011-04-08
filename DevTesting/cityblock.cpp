@@ -12,7 +12,7 @@ CityBlock::CityBlock()
   z_coord = 0;
   
   roadWidth = SIZE / 2;
-  
+  blockID = 0;
   buildings.clear();
   
 }
@@ -141,4 +141,17 @@ bool CityBlock::operator==(const CityBlock& righthand)
 }
 
 
+void CityBlock::setID(int newID)
+{
+  blockID = newID;
+}
 
+int CityBlock::getID()
+{
+  return blockID;
+}
+
+int CityBlock::getBuildingCount()
+{
+  return buildings.size();
+}

@@ -18,6 +18,10 @@ Building::Building(float x, float y, float z)
   _green = 0.3;
   _blue = 0.36;
   
+  buildingID = 00000;
+  
+  doRender = true;
+  
 }
 
 Building::~Building()
@@ -44,7 +48,10 @@ void Building::Draw()
    glPushAttrib(GL_CURRENT_COLOR); //may or may not work
    glTranslatef(x, ySize / 2 , z);  // ySize/2 because we only need to scale up half the vertical height of the object
    glScalef(xSize, ySize, zSize);
-   glColor3f(_red, _green, _blue);
+   
+   //glColor3f(_red, _green, _blue);
+   glMaterialf ( GL_FRONT_AND_BACK, GL_AMBIENT, 1.0) ;
+
    glutSolidCube(1.0);
    glPopAttrib();			//matched with PushAttrib above.
    glPopMatrix();
@@ -72,5 +79,15 @@ float Building::GetGreen()
 float Building::GetRed()
 {
   return _red;
+}
+
+int Building::getBuildingID()
+{
+  return buildingID;
+}
+
+void Building::setBuildingID(int newID)
+{
+  buildingID = newID;
 }
 
