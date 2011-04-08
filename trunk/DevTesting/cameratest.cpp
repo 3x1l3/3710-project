@@ -68,12 +68,6 @@ void CallBackRenderScene(void)
     robot->setZ(camera->getEye_z()+camera->getAt_z()-5);
     robot->draw();
    
-  
-   
-  
- 
-   //////////TESTING Drawing city block ///////////////////
-   
    glPushMatrix();
   
    /*

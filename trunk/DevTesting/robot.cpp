@@ -49,18 +49,18 @@ void Robot::head_rotate() {
   switch(this->head_position) {
     case 1:
       if (this->head_angle <= 90)
-	this->head_angle += 0.5;
+	this->head_angle += 3.5;
       break;
     case 2:
       if (this->head_angle >= -90)
-      this->head_angle -= 0.5;
+      this->head_angle -= 3.5;
       break;
       
     case 3:
       if (this->head_angle > 0)
-	this->head_angle -= 0.5;
+	this->head_angle -= 3.5;
       else if (this->head_angle < 0)
-	this->head_angle += 0.5;
+	this->head_angle += 3.5;
       break;
     
   }
@@ -96,15 +96,37 @@ void Robot::draw()
     
    //Body
    glPushMatrix();
+   glPushAttrib(GL_COLOR_BUFFER_BIT);
    glScalef(0.75, 1.0, 0.75);
    glutSolidCube(1);
+   glTranslatef(0.0, 0.0, 0.75);
+   glColor3f(1.0, 0.8, 0.0);
+   glBegin(GL_QUADS);
+    glVertex3f(-0.25, 0.3, 0);
+    glVertex3f(0.25, 0.3, 0);
+    glVertex3f(0.25, -0.3, 0);
+    glVertex3f(-0.25, -0.3, 0);
+   glEnd();
+   glTranslatef(0.0, 0.1, -1.50);
+   glBegin(GL_TRIANGLES);
+     glVertex3f(0.0, 0.0, 0.0);
+     glVertex3f(0.3, -0.3, 0.0);
+     glVertex3f(-0.3, -0.3, 0.0);
+     glVertex3f(0.0, 0.3, 0.0);
+     glVertex3f(0.3, 0.0, 0.0);
+     glVertex3f(-0.3, 0.0, 0.0);
+   glEnd();
+
+   glPopAttrib();
    glPopMatrix();
    
    //neck
    glPushMatrix();
+   glColor3f(0.2, 0.2, 0.5);
    glTranslatef(0.0, 1.0, 0.0);
    glRotatef(90, 1.0, 0.0, 0.0);
    gluCylinder(quad, 0.25, 0.25, 0.5, 100, 100);
+   glTranslatef(1.0, 0.0, 0.0);
    glPopMatrix();
    
    //antenna
