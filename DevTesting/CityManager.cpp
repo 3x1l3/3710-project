@@ -11,7 +11,7 @@ CityManager::CityManager()
   y_coord = 0;
   z_coord = 0;
   
-  roadWidth = 5;
+  roadWidth = 15;
   
   cityBlocks.clear();
   
@@ -42,7 +42,18 @@ void CityManager::Draw()
    
    //translate the whole city to the specified coordinates
    glTranslatef(x_coord, y_coord, z_coord);
+  
+   int size = cityBlocks.size();
    
+  
+   //draw our ground plane)
+   glColor3f(1.0, 1.0, 0.1);
+   glBegin(GL_QUADS);
+   glVertex3f(0-15, -0.01, 0-15);
+   glVertex3f(1.7*size, -0.01, 0-15);
+   glVertex3f(1.7*size, -0.01, 1.7*size);
+   glVertex3f(0-15, -0.01, 1.7*size);
+   glEnd();
    
    for(unsigned i = 0; i < cityBlocks.size(); i++)
    {

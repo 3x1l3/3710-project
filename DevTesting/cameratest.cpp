@@ -1,5 +1,5 @@
-#define PROGRAM_TITLE "Assignment 1"
-#define DISPLAY_INFO "Klassen, Chad"
+#define PROGRAM_TITLE "Final Project"
+#define DISPLAY_INFO "Klassen, Chad   Racine, Jason    Jordan, Peoples   Shepley, Adam"
 
 #include <iostream>
 #include <stdlib.h>  // Useful for the following includes.
@@ -33,7 +33,9 @@ float X_Speed = 0.0f;  // the rotation.
 float Y_Speed = 0.0f;
 float Z_Off   =-5.0f;
 
-int roadWidth = 5.0f;
+int roadWidth = 15;
+
+int cityScale = 3;
 
 Camera* camera = new Camera(0.0, 2.0, 5.0, 0.0, 0.0, -1.0);
 Robot* robot = new Robot();
@@ -88,11 +90,11 @@ void CallBackRenderScene(void)
    */
       ///Draw a building
    float buildingX = 1.0;
-   float buildingY = 0.0;
+   float buildingY = 0;
    float buildingZ = 0;
    
    float xSize = 1.0;
-   float ySize = 5.0;
+   float ySize = 5.0 * cityScale;
    float zSize = 1.0;
    
    /*
@@ -110,22 +112,22 @@ void CallBackRenderScene(void)
    CityBlock *block = new CityBlock();
    block->AddBuilding(bld);
    
-   block->AddBuilding( new Building(-2.0, 0.0, -1.0) );
-   bld = new Building(3.0, 0.0, 4.0);
-   bld->SetScale(2.5, 1.0, 1.5);
+   block->AddBuilding( new Building(-2.0 * cityScale, 0.0, -1.0 * cityScale) );
+   bld = new Building(3.0 * cityScale, 0.0, 4.0 * cityScale);
+   bld->SetScale(2.5 * cityScale, 1.0 * cityScale, 1.5 * cityScale);
    block->AddBuilding(bld);
    
-   bld = new Building(1.0);
-   bld->SetScale(3.0, 3.0, 3.0);
+   bld = new Building(1.0 * cityScale);
+   bld->SetScale(3.0 * cityScale, 3.0 * cityScale, 3.0 * cityScale);
    block->AddBuilding(bld);
    
-   bld = new Building(-4.0, 0.0, 4.0);
-   bld->SetScale(0.5, 7.0, 0.5);
+   bld = new Building(-4.0 * cityScale, 0.0 * cityScale, 4.0 * cityScale);
+   bld->SetScale(0.5 * cityScale, 7.0 * cityScale, 0.5 * cityScale);
    bld->SetColor(0, 7.0, 6.7);
    block->AddBuilding(bld);
    
-   bld = new Building(-3.7, 0.0, 4.0);
-   bld->SetScale(1.8, 4.0, 1.4);
+   bld = new Building(-3.7 * cityScale, 0.0 * cityScale, 4.0 * cityScale);
+   bld->SetScale(1.8 * cityScale, 4.0 * cityScale, 1.4 * cityScale);
    block->AddBuilding(bld);
       
    /*
@@ -147,7 +149,7 @@ void CallBackRenderScene(void)
      { 
        b = new CityBlock();
        *b = *block;
-       b->SetOrigin( i * (10+roadWidth), 0, j * (10+roadWidth)  );
+       b->SetOrigin( i * (20+roadWidth), 0, j * (20+roadWidth)  );
        city->AddCityBlock( b );
      }
    }
@@ -235,7 +237,7 @@ void CallBackResizeScene(int Width, int Height)
 
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   gluPerspective(45.0f,(GLfloat)Width/(GLfloat)Height,0.1f,100.0f);
+   gluPerspective(45.0f,(GLfloat)Width/(GLfloat)Height,0.1f,300.0f);
 
    glMatrixMode(GL_MODELVIEW);
 
