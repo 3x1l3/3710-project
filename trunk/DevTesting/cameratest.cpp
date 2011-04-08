@@ -178,8 +178,21 @@ void CallBackRenderScene(void)
      { 
        b = new CityBlock();
        *b = *block;
+       
+       //We want to give every building an ID number
+       //syntax is ...QXXX where Q is the block is belongs to.
+       //we assume a max of 999 buildings per block.
+       //cout << b->getBuildingCount() << endl;
+       for(int a = 0; a < b->getBuildingCount(); a++)
+       {
+	 b->BuildingAt(a)->setBuildingID((((j+1)+(i*20)) * 1000) + (a+1));
+	 //cout << "iteration is " << a << endl;
+       }
+       b->setID(j+1 + (i*20));
        b->SetOrigin( i * (20+roadWidth), 0, j * (20+roadWidth)  );
        city->AddCityBlock( b );
+       
+       //cout << "Created City Block " << b->getID() << endl;
      }
    }
    city->setRoadWidth(roadWidth);
@@ -283,14 +296,15 @@ void MyInit(int Width, int Height)
   
     GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
    GLfloat mat_shininess[] = { 50.0 };
-   GLfloat light_position[] = { 3.0, 3.0, 3.0, 0.0 };
+   GLfloat light_position[] = { 3.0, 3.0, 3.0, 0.5 };
    glShadeModel (GL_SMOOTH);
 
+   glEnable(GL_LIGHTING);
    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
-   glEnable(GL_LIGHTING);
+   
    glEnable(GL_LIGHT0);
    glEnable(GL_DEPTH_TEST);
    glEnable(GL_COLOR_MATERIAL);

@@ -23,6 +23,9 @@ class Building
     void SetScale(float, float, float);
     void Draw();
     
+    void setBuildingID(int newID);
+    int getBuildingID();
+    
     float GetRed();
     float GetGreen();
     float GetBlue();
@@ -32,6 +35,9 @@ class Building
 	
   private:
     float x, y, z;
+    int buildingID;
+    
+    bool doRender;
     float xSize, ySize, zSize;
     float _red, _green, _blue;
 };
