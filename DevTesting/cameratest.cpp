@@ -105,29 +105,58 @@ void CallBackRenderScene(void)
    glPopMatrix();
    */
    
+   
    Building *bld = new Building();
    bld->SetOrigin(buildingX, buildingY, buildingZ);
-   bld->SetScale(xSize, ySize, zSize);
+   bld->SetScale(xSize * cityScale, ySize * cityScale, zSize * cityScale);
 
    CityBlock *block = new CityBlock();
    block->AddBuilding(bld);
    
-   block->AddBuilding( new Building(-2.0 * cityScale, 0.0, -1.0 * cityScale) );
-   bld = new Building(3.0 * cityScale, 0.0, 4.0 * cityScale);
+   block->AddBuilding( new Building(-2.0 * cityScale, 0.0 * cityScale, -1.0 * cityScale) );
+   bld = new Building(3.0 * cityScale, 0.0 * cityScale, 4.0 * cityScale);
    bld->SetScale(2.5 * cityScale, 1.0 * cityScale, 1.5 * cityScale);
    block->AddBuilding(bld);
    
-   bld = new Building(1.0 * cityScale);
+   bld = new Building(1.0);
    bld->SetScale(3.0 * cityScale, 3.0 * cityScale, 3.0 * cityScale);
    block->AddBuilding(bld);
    
-   bld = new Building(-4.0 * cityScale, 0.0 * cityScale, 4.0 * cityScale);
+   bld = new Building(-4.0, 0.0, 4.0);
    bld->SetScale(0.5 * cityScale, 7.0 * cityScale, 0.5 * cityScale);
    bld->SetColor(0, 7.0, 6.7);
    block->AddBuilding(bld);
    
-   bld = new Building(-3.7 * cityScale, 0.0 * cityScale, 4.0 * cityScale);
+   bld = new Building(-3.7, 0.0, 4.0);
    bld->SetScale(1.8 * cityScale, 4.0 * cityScale, 1.4 * cityScale);
+   block->AddBuilding(bld);
+   
+   bld = new Building(-1.0, 0.0, 4.0);
+   bld->SetScale(2.5 * cityScale, 3.0 * cityScale, 1.0 * cityScale);
+   block->AddBuilding(bld);
+   
+   bld = new Building(-4.0, 0.0, -4.0);
+   bld->SetScale(1.0 * cityScale, 10.0 * cityScale, 1.0 * cityScale);
+   block->AddBuilding(bld);
+   
+   bld = new Building(3.0, 0.0, -3.1);
+   bld->SetColor(1.0, 0.50, 0.50);
+   bld->SetScale(2.7 * cityScale, 1.7 * cityScale, 2.9 * cityScale);
+   block->AddBuilding(bld);
+   
+   bld = new Building(4.5, 0.0, -0.5);
+   bld->SetColor(0.33, 0.33, 0.33);
+   bld->SetScale(1.0 * cityScale, 6.0 * cityScale, 1.5 * cityScale);
+   block->AddBuilding(bld);
+   
+   bld = new Building(-4.0, 0.0, 0.0);
+   bld->SetColor(0.2, 0.2, 0.2);
+   bld->SetScale(1.0 * cityScale, 4.0 * cityScale, 5.8 * cityScale);
+   block->AddBuilding(bld);
+   
+   bld = new Building(2.9, 0.0, 2.0);
+   bld->SetColor(0.3, 0.3, 0.47);
+   bld->SetScale(1.0 * cityScale, 9.0 * cityScale, 1.3 * cityScale);
    block->AddBuilding(bld);
       
    /*
@@ -255,7 +284,6 @@ void MyInit(int Width, int Height)
     GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
    GLfloat mat_shininess[] = { 50.0 };
    GLfloat light_position[] = { 3.0, 3.0, 3.0, 0.0 };
-   glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel (GL_SMOOTH);
 
    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
@@ -271,7 +299,7 @@ void MyInit(int Width, int Height)
    
    
    // Color to clear color buffer to.
-   glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
+   glClearColor(20.0/255.0, 20.0/255.0, 205.0/255.0, 0.0f);
 
    // Depth to clear depth buffer to; type of test.
    glClearDepth(1.0);
