@@ -227,7 +227,6 @@ void mySCBKey(int key, int x, int y) {
   switch (key)
   {
     case 1: //F1
-      
       robot->turnHeadForward();
       break;
     case 2: //F2
@@ -240,9 +239,11 @@ void mySCBKey(int key, int x, int y) {
     
     case 102:
      camera->rotate_right(0.1);
+     robot->turnBodyRight();
     break;
     case 100:
       camera->rotate_left(0.1);
+      robot->turnBodyLeft();
       break;
     case 101: //up
       camera->rotate_up(0.5);

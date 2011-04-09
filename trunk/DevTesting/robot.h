@@ -19,6 +19,12 @@ class Robot {
     int head_position;
     void antenna_rotate();
     
+    
+    float body_angle;
+    int body_position;
+    
+    float currentForwardAngle;
+    
   public:
     
     Robot();
@@ -32,6 +38,11 @@ class Robot {
     void turnHeadRight();
     void turnHeadForward();
     void head_rotate();
+    
+    void turnBodyLeft();
+    void turnBodyRight();
+    void turnBodyForward();
+    void body_rotate();
     
     
   
