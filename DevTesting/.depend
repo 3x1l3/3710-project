@@ -1,14 +1,7 @@
 cameratest.o: cameratest.cpp camera.h building.h cityblock.h robot.h \
  CityManager.h
-cameratest.o: cameratest.cpp camera.h building.h cityblock.h robot.h \
- CityManager.h
-camera.o: camera.cpp camera.h
 camera.o: camera.cpp camera.h
 building.o: building.cpp building.h
-building.o: building.cpp building.h
-cityblock.o: cityblock.cpp cityblock.h building.h
 cityblock.o: cityblock.cpp cityblock.h building.h
 CityManager.o: CityManager.cpp CityManager.h cityblock.h building.h
-CityManager.o: CityManager.cpp CityManager.h cityblock.h building.h
-robot.o: robot.cpp robot.h
 robot.o: robot.cpp robot.h

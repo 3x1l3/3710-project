@@ -8,6 +8,13 @@ Robot::Robot()
   this->pos_z = 0.0;
   
   this->antenna_angle = 0.0;
+  this->head_position = 3;
+  this->body_position = 3;
+  this->head_angle = 0.0f;
+  this->body_angle = 0.0f;
+  
+  currentForwardAngle = 0;
+  
 }
 
 Robot::Robot(float x, float y, float z)
@@ -17,6 +24,12 @@ Robot::Robot(float x, float y, float z)
   this->pos_z = z;
   
   this->antenna_angle = 0.0;
+  this->head_position = 3;
+  this->body_position = 3;
+  this->head_angle = 0.0f;
+  this->body_angle = 0.0f;
+  
+  currentForwardAngle = 0;
 }
 void Robot::setX(float x)
 {
@@ -68,6 +81,7 @@ void Robot::head_rotate() {
  
 }
 
+
 void Robot::turnHeadLeft()
 {
   this->head_position = 1;
@@ -81,18 +95,62 @@ void Robot::turnHeadForward()
 {
   this->head_position = 3;
 }
+/////////////////////////BODY ROTATIONS/////////////////////////////////////////////
+void Robot::body_rotate() {
+
+  switch(this->body_position) {
+    case 1:
+      if (this->body_angle <= currentForwardAngle)
+	this->body_angle += 3.5;
+      break;
+    case 2:
+      if (this->body_angle >= currentForwardAngle)
+      this->body_angle -= 3.5;
+      break;
+      
+    case 3:
+      if (this->body_angle > currentForwardAngle)
+	this->body_angle -= 3.5;
+      else if (this->body_angle < currentForwardAngle)
+	this->body_angle += 3.5;
+      break;
+    
+  }
+  
+ 
+}
+
+
+void Robot::turnBodyLeft()
+{
+  this->body_position = 1;
+  currentForwardAngle += 90;
+}
+void Robot::turnBodyRight()
+{
+  this->body_position = 2;
+  currentForwardAngle -= 90;
+}
+
+void Robot::turnBodyForward()
+{
+  this->body_position = 3;
+}
+/////////////////////////BODY ROTATIONS/////////////////////////////////////////////
 
 
 void Robot::draw()
 {
   this->antenna_rotate();
   this->head_rotate();
+  this->body_rotate();
   
  GLUquadric* quad = gluNewQuadric();
    glPushMatrix();
     
     glTranslatef(this->pos_x, this->pos_y, this->pos_z);
     glRotatef(180, 0.0, 1.0, 0.0);
+    glRotatef(this->body_angle, 0.0, 1.0, 0.0);
     
    //Body
    glPushMatrix();
@@ -125,7 +183,7 @@ void Robot::draw()
    glColor3f(0.2, 0.2, 0.5);
    glTranslatef(0.0, 1.0, 0.0);
    glRotatef(90, 1.0, 0.0, 0.0);
-   gluCylinder(quad, 0.25, 0.25, 0.5, 100, 100);
+   gluCylinder(quad, 0.20, 0.20, 0.5, 100, 100);
    glTranslatef(1.0, 0.0, 0.0);
    glPopMatrix();
    
