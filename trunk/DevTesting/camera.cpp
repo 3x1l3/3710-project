@@ -155,11 +155,7 @@ void Camera::setAt_z(float z)
 
 void Camera::rotate_right(float robot_x, float robot_z) {
   
-  cout << "Robot x: " << robot_x << endl;
-  cout << "Robot z: " << robot_z << endl;
-  cout << "Eye x: " << this->eye_x << endl;
-  cout << "Eye z: " << this->eye_z << endl;
-  
+ 
   if (this->eye_x == robot_x) {
       
     if (this->eye_z > robot_z)
@@ -167,12 +163,12 @@ void Camera::rotate_right(float robot_x, float robot_z) {
     else if (this->eye_z < robot_z)
       this->eye_x = robot_x + this->eyefromat;
     
-    this->eye_z = robot_x;
+    this->eye_z = robot_z;
     
     
   }
   else if (this->eye_z == robot_z) {
-     cout << "herez" << endl;
+ 
     if (this->eye_x > robot_x)
       this->eye_z = robot_z + this->eyefromat;
     else if (this->eye_x < robot_x)
@@ -188,11 +184,6 @@ void Camera::rotate_right(float robot_x, float robot_z) {
 
 void Camera::rotate_left(float robot_x, float robot_z) {
   
-    cout << "Robot x: " << robot_x << endl;
-  cout << "Robot z: " << robot_z << endl;
-  cout << "Eye x: " << this->eye_x << endl;
-  cout << "Eye z: " << this->eye_z << endl;
-  
   if (this->eye_x == robot_x) {
     
     if (this->eye_z > robot_z)
@@ -200,7 +191,7 @@ void Camera::rotate_left(float robot_x, float robot_z) {
     else if (this->eye_z < robot_z)
       this->eye_x = robot_x - this->eyefromat;
     
-    this->eye_z = robot_x;
+    this->eye_z = robot_z;
     
     
   }
@@ -220,26 +211,40 @@ void Camera::rotate_left(float robot_x, float robot_z) {
   
 }
 
+void Camera::moveCamera(std::vector< float > forwardVec)
+{
+  this->eye_x -= (forwardVec[0] * -1);
+  this->eye_y -= (forwardVec[1] * -1);
+  this->eye_z -= (forwardVec[2] * -1);
+ 
+}
+
+
 void Camera::viewRotateRight(float robot_x, float robot_z) {
 
   float diff = this->eyefromat*2;
   
   if (this->eye_x > robot_x && this->eye_z < robot_z) {
       this->eye_z += diff;
+      
   }
   
-  if (this->eye_x > robot_x && this->eye_z > robot_z) {
+  else if (this->eye_x > robot_x && this->eye_z > robot_z) {
       this->eye_x -= diff;
+  
+      
   }
   
-  if (this->eye_x < robot_x && this->eye_z > robot_z) {
+  else if (this->eye_x < robot_x && this->eye_z > robot_z) {
       this->eye_z -= diff;
+     
   }
   
-  if (this->eye_x < robot_x && this->eye_z < robot_z) {
+  else if (this->eye_x < robot_x && this->eye_z < robot_z) {
       this->eye_x += diff;
+   
   }
-  
+ 
 }
 
 void Camera::viewRotateLeft(float robot_x, float robot_z) {
@@ -249,15 +254,15 @@ void Camera::viewRotateLeft(float robot_x, float robot_z) {
    this->eye_x -= diff;
   }
   
-  if (this->eye_x > robot_x && this->eye_z > robot_z) {
+  else if (this->eye_x > robot_x && this->eye_z > robot_z) {
     this->eye_z -= diff;
   }
   
-  if (this->eye_x < robot_x && this->eye_z > robot_z) {
+  else if (this->eye_x < robot_x && this->eye_z > robot_z) {
      this->eye_x += diff;
   }
   
-  if (this->eye_x < robot_x && this->eye_z < robot_z) {
+  else if (this->eye_x < robot_x && this->eye_z < robot_z) {
     this->eye_z += diff;
   }
   
