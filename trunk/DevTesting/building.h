@@ -12,6 +12,7 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
+
 class Building
 {
   public:

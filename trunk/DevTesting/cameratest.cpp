@@ -37,8 +37,12 @@ int roadWidth = 15;
 
 int cityScale = 3;
 
-Camera* camera = new Camera(0.0, 2.0, 5.0, 0.0, 0.0, -1.0);
-Robot* robot = new Robot();
+float viewing_distance = 5.0; //camera is 5.0 from the robot
+
+Robot* robot = new Robot(15.0, 1.0, 15.0);
+Camera* camera = new Camera(robot->getX(), 3.0, robot->getZ()+viewing_distance, robot->getX(), robot->getY(), robot->getZ());
+
+
 
 /////////////////////////////////////////////////////////
 // Routine which actually does the drawing             //
@@ -56,16 +60,14 @@ void CallBackRenderScene(void)
    // Move back to the origin
    glLoadIdentity();
    
-   
+   //cout << camera->getAt_x() <<  " " << camera->getAt_y() << " " << camera->getAt_z() << endl;
    camera->lookat();
    /*
    gluLookAt(3.0, 3.0, 3.0, 
 	     0.0, 0.0, 0.0, 
 	     0.0, 1.0, 0.0);
    */
-    robot->setX(camera->getEye_x()+camera->getAt_x());
-    robot->setY(camera->getEye_y()+camera->getAt_y()-1);
-    robot->setZ(camera->getEye_z()+camera->getAt_z()-5);
+   
     robot->draw();
    
    glPushMatrix();
@@ -190,7 +192,7 @@ void CallBackRenderScene(void)
      }
    }
    city->setRoadWidth(roadWidth);
-   city->Draw();
+  city->Draw();
    
    glPopMatrix();
    
@@ -211,14 +213,24 @@ void myCBKey(unsigned char key, int x, int y)
       camera->walk(2);
      break;
     case 97: //left a
-      camera->walk(3);
+      camera->rotate_left(robot->getX(), robot->getZ());
+//       robot->turnBodyRight();
       break;
     case 100: //right d
-      camera->walk(4);
+     
+      camera->rotate_right(robot->getX(), robot->getZ());
+     // robot->turnBodyLeft();
+      //camera->walk(4);
       break;
+    case 102:
+        
+   
+   
       
+      break;
     }
     
+    //printf("%d", key);
     
 }
 
@@ -234,15 +246,33 @@ void mySCBKey(int key, int x, int y) {
       break;
     case 3: //F3
       robot->turnHeadLeft();
-      
       break;
+      
+    case 4:
+      camera->viewDefault();
+      break;
+    case 5:
+      camera->viewBL(robot->getX(), robot->getZ());
+     break;
+    case 6:
+      camera->viewBR(robot->getX(), robot->getZ());
+      break;
+    case 7:
+      camera->viewFR(robot->getX(), robot->getZ());
+      break;
+    case 8:
+      camera->viewFL(robot->getX(), robot->getZ());
+      break; 
     
     case 102:
-     camera->rotate_right(0.1);
+     //camera->rotate_right(0.1);
+     
+     
+     
      robot->turnBodyRight();
     break;
     case 100:
-      camera->rotate_left(0.1);
+     // camera->rotate_left(0.1);
       robot->turnBodyLeft();
       break;
     case 101: //up
@@ -254,7 +284,7 @@ void mySCBKey(int key, int x, int y) {
     
   }
   
- printf("%d", key);
+
   
 }
 

@@ -17,6 +17,7 @@ Robot::Robot()
   
 }
 
+
 Robot::Robot(float x, float y, float z)
 {
   this->pos_x = x;
@@ -43,6 +44,20 @@ void Robot::setZ(float z)
 {
   this->pos_z = z;
 }
+
+float Robot::getX() {
+    return this->pos_x;
+}
+
+float Robot::getY()
+{
+  return this->pos_y;
+}
+float Robot::getZ()
+{
+  return this->pos_z;
+}
+
 
 Robot::~Robot()
 {
@@ -80,7 +95,6 @@ void Robot::head_rotate() {
   
  
 }
-
 
 void Robot::turnHeadLeft()
 {
@@ -141,6 +155,7 @@ void Robot::turnBodyForward()
 
 void Robot::draw()
 {
+  
   this->antenna_rotate();
   this->head_rotate();
   this->body_rotate();

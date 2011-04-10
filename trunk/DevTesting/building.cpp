@@ -24,6 +24,7 @@ Building::Building(float x, float y, float z)
   
 }
 
+
 Building::~Building()
 {
 }

@@ -10,9 +10,11 @@ Camera::Camera() {
   this->up_x = 0.0;
   this->up_y = 1.0;
   this->up_z = 0.0;
-  
+  this->eyefromat = 5.0;
+  this->default_view_set = false;
   this->yaxis_rotation_pos = 0.0;
   this->xaxis_rotation_pos = 0.0;
+  this->state = "D";
   
 }
 
@@ -30,8 +32,23 @@ Camera::Camera(float eyex, float eyey, float eyez, float atx, float aty, float a
   this->eyefromat = 5;
   this->yaxis_rotation_pos = 0.0;
   this->xaxis_rotation_pos = 0.0;
+  this->state = "D";
 }
 
+void Camera::setLookat(float eyex, float eyey, float eyez, float atx, float aty, float atz)
+{
+  this->eye_x = eyex;
+  this->eye_y = eyey;
+  this->eye_z = eyez;
+  this->at_x = atx;
+  this->at_y = aty;
+  this->at_z = atz;
+  this->up_x = 0.0;
+  this->up_y = 1.0;
+  this->up_z = 0.0;
+  this->eyefromat = 5;
+  
+}
 
 
 Camera::~Camera() {
@@ -70,10 +87,11 @@ float Camera::getEye_z() {
 }
 
 void Camera::lookat() {
-
+ 
   gluLookAt(this->eye_x, this->eye_y, this->eye_z,
-	    eye_x+this->at_x, eye_y+this->at_y, eye_z+this->at_z,
+	    this->at_x, this->at_y, this->at_z,
 	    this->up_x, this->up_y, this->up_z);
+	      
 	    
 }
 
@@ -98,34 +116,150 @@ void Camera::walk(int direction) {
      
     break;
     case 4:
-     rotate_right(0.1);
+     //rotate_right(0.1);
       
     break;
     case 3:  
-     rotate_left(0.1);
+    // rotate_left(0.1);
     break;  
   }  
  
   
 }
 
+void Camera::setEye_x(float x) {
+ this->eye_x = x; 
+}
 
-void Camera::rotate_right(float angle) {
+void Camera::setEye_y(float y) {
+  this->eye_y = y;
+}
 
-   this->yaxis_rotation_pos += angle; 
-  this->at_x = sin(yaxis_rotation_pos);
-  this->at_z = -cos(yaxis_rotation_pos);
+void Camera::setEye_z(float z) {
+ this->eye_z = z; 
+}
+
+void Camera::setAt_x(float x) {
+  this->at_x = x;
+}
+
+void Camera::setAt_y(float y)
+{
+  this->at_y = y;
+}
+void Camera::setAt_z(float z)
+{
+  this->at_z = z;
+}
+
+
+void Camera::rotate_right(float robot_x, float robot_z) {
+  
+  cout << "Robot x: " << robot_x << endl;
+  cout << "Robot z: " << robot_z << endl;
+  cout << "Eye x: " << this->eye_x << endl;
+  cout << "Eye z: " << this->eye_z << endl;
+  
+  if (this->eye_x == robot_x) {
+      
+    if (this->eye_z > robot_z)
+      this->eye_x = robot_x - this->eyefromat;
+    else if (this->eye_z < robot_z)
+      this->eye_x = robot_x + this->eyefromat;
+    
+    this->eye_z = robot_x;
+    
+    
+  }
+  else if (this->eye_z == robot_z) {
+     cout << "herez" << endl;
+    if (this->eye_x > robot_x)
+      this->eye_z = robot_z + this->eyefromat;
+    else if (this->eye_x < robot_x)
+      this->eye_z = robot_z - this->eyefromat;
+    
+    this->eye_x = robot_x;
+    
+  }
+  
+  this->viewRotateRight(robot_x, robot_z);
 
 }
 
-void Camera::rotate_left(float angle) {
-   this->yaxis_rotation_pos -= angle; 
-  this->at_x = sin(yaxis_rotation_pos);
-  this->at_z = -cos(yaxis_rotation_pos);
+void Camera::rotate_left(float robot_x, float robot_z) {
   
+    cout << "Robot x: " << robot_x << endl;
+  cout << "Robot z: " << robot_z << endl;
+  cout << "Eye x: " << this->eye_x << endl;
+  cout << "Eye z: " << this->eye_z << endl;
+  
+  if (this->eye_x == robot_x) {
     
+    if (this->eye_z > robot_z)
+      this->eye_x = robot_x + this->eyefromat;
+    else if (this->eye_z < robot_z)
+      this->eye_x = robot_x - this->eyefromat;
+    
+    this->eye_z = robot_x;
+    
+    
+  }
+  else if (this->eye_z == robot_z) {
+   
+    if (this->eye_x > robot_x)
+      this->eye_z = robot_z - this->eyefromat;
+    else if (this->eye_x < robot_x)
+      this->eye_z = robot_z + this->eyefromat;
+    
+    this->eye_x = robot_x;
+    
+  }
   
+ 
+  this->viewRotateLeft(robot_x, robot_z);
   
+}
+
+void Camera::viewRotateRight(float robot_x, float robot_z) {
+
+  float diff = this->eyefromat*2;
+  
+  if (this->eye_x > robot_x && this->eye_z < robot_z) {
+      this->eye_z += diff;
+  }
+  
+  if (this->eye_x > robot_x && this->eye_z > robot_z) {
+      this->eye_x -= diff;
+  }
+  
+  if (this->eye_x < robot_x && this->eye_z > robot_z) {
+      this->eye_z -= diff;
+  }
+  
+  if (this->eye_x < robot_x && this->eye_z < robot_z) {
+      this->eye_x += diff;
+  }
+  
+}
+
+void Camera::viewRotateLeft(float robot_x, float robot_z) {
+ 
+  float diff = this->eyefromat*2;
+  if (this->eye_x > robot_x && this->eye_z < robot_z) {
+   this->eye_x -= diff;
+  }
+  
+  if (this->eye_x > robot_x && this->eye_z > robot_z) {
+    this->eye_z -= diff;
+  }
+  
+  if (this->eye_x < robot_x && this->eye_z > robot_z) {
+     this->eye_x += diff;
+  }
+  
+  if (this->eye_x < robot_x && this->eye_z < robot_z) {
+    this->eye_z += diff;
+  }
   
   
 }
@@ -145,4 +279,53 @@ void Camera::rotate_up(float angle) {
   } else {
    this->xaxis_rotation_pos -= angle; 
   }
+}
+void Camera::viewDefault()
+{
+  this->eye_x = this->deye_x;
+  this->eye_z = this->deye_z;
+  this->default_view_set = false;
+  this->state = "D";
+}
+
+void Camera::storeDefaultView()
+{
+  if (!this->default_view_set) {
+    this->deye_x = this->eye_x;
+    this->deye_z = this->eye_z;
+    this->default_view_set = true;
+  }
+}
+
+
+void Camera::viewBL(float robot_x, float robot_z)
+{
+  this->storeDefaultView();
+  this->eye_x = robot_x - this->eyefromat;
+  this->eye_z = robot_z + this->eyefromat;
+  this->state = "BL";
+}
+
+void Camera::viewBR(float robot_x, float robot_z)
+{
+  this->storeDefaultView();
+  this->eye_x = robot_x + this->eyefromat;
+  this->eye_z = robot_z + this->eyefromat;
+  this->state = "BR";
+}
+
+void Camera::viewFL(float robot_x, float robot_z)
+{
+  this->storeDefaultView();
+  this->eye_x = robot_x - this->eyefromat;
+  this->eye_z = robot_z - this->eyefromat;
+  this->state = "FL";
+}
+void Camera::viewFR(float robot_x, float robot_z)
+{
+  this->storeDefaultView();
+  this->eye_x = robot_x + this->eyefromat;
+  this->eye_z = robot_z - this->eyefromat;
+  this->state = "FR";
+   
 }
