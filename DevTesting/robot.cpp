@@ -3,34 +3,33 @@
 
 Robot::Robot()
 {
-  this->pos_x = 0.0;
-  this->pos_y = 0.0;
-  this->pos_z = 0.0;
-  
-  this->antenna_angle = 0.0;
-  this->head_position = 3;
-  this->body_position = 3;
-  this->head_angle = 0.0f;
-  this->body_angle = 0.0f;
-  
-  currentForwardAngle = 0;
-  
+  this->init();
 }
 
 
 Robot::Robot(float x, float y, float z)
 {
+ 
+  this->init();
   this->pos_x = x;
   this->pos_y = y;
   this->pos_z = z;
-  
+}
+
+void Robot::init() {
+  this->pos_x = 0.0;
+  this->pos_y = 0.0;
+  this->pos_z = 0.0;
   this->antenna_angle = 0.0;
   this->head_position = 3;
   this->body_position = 3;
   this->head_angle = 0.0f;
   this->body_angle = 0.0f;
-  
-  currentForwardAngle = 0;
+  forward_vector.push_back(0.0);
+  forward_vector.push_back(0.0);
+  forward_vector.push_back(-1.0);
+  this->currentForwardAngle = 0;
+  this->forward_amount = 1.0;
 }
 void Robot::setX(float x)
 {
@@ -111,22 +110,22 @@ void Robot::turnHeadForward()
 }
 /////////////////////////BODY ROTATIONS/////////////////////////////////////////////
 void Robot::body_rotate() {
-
+  float angle_magnitude = 10.0;
   switch(this->body_position) {
     case 1:
       if (this->body_angle <= currentForwardAngle)
-	this->body_angle += 3.5;
+	this->body_angle += angle_magnitude;
       break;
     case 2:
       if (this->body_angle >= currentForwardAngle)
-      this->body_angle -= 3.5;
+      this->body_angle -= angle_magnitude;
       break;
       
     case 3:
       if (this->body_angle > currentForwardAngle)
-	this->body_angle -= 3.5;
+	this->body_angle -= angle_magnitude;
       else if (this->body_angle < currentForwardAngle)
-	this->body_angle += 3.5;
+	this->body_angle += angle_magnitude;
       break;
     
   }
@@ -150,7 +149,79 @@ void Robot::turnBodyForward()
 {
   this->body_position = 3;
 }
+
 /////////////////////////BODY ROTATIONS/////////////////////////////////////////////
+
+/*
+  direction = 1 right
+  direction = 2 left
+*/
+void Robot::updateForwardVec(int direction)
+{
+  
+  if (this->forward_vector[0] != 0.0) {
+    
+    if (direction == 1) {
+      
+      if (this->forward_vector[0] > 0.0)
+	this->forward_vector[2] = 1.0;
+      else if (this->forward_vector[0] < 0.0)
+	this->forward_vector[2] = -1.0;
+      
+    } 
+    else if (direction == 2) {
+       if (this->forward_vector[0] > 0.0)
+	 this->forward_vector[2] = -1.0;
+       else if (this->forward_vector[0] < 0.0)
+	 this->forward_vector[2] = 1.0;
+    }
+    
+    this->forward_vector[0] = 0.0;
+    
+  }
+  else if (this->forward_vector[2] != 0.0) {
+  
+    if (direction == 1) {
+    
+      if (this->forward_vector[2] > 0.0){
+	this->forward_vector[0] = -1.0;
+      }
+      else if (this->forward_vector[2] < 0.0) {
+	this->forward_vector[0] = 1.0;
+      }
+    } 
+    else if (direction == 2) {
+      
+      if (this->forward_vector[2] > 0.0)
+	this->forward_vector[0] = 1.0;
+      else if (this->forward_vector[2] < 0.0) 
+	this->forward_vector[0] = -1.0;
+      
+    }
+    this->forward_vector[2] = 0.0;
+    
+  }
+  
+  
+  
+}
+
+
+
+void Robot::moveFoward()
+{
+  
+  this->pos_x += (this->forward_vector[0] * this->forward_amount);
+  this->pos_y += (this->forward_vector[1] * this->forward_amount);
+  this->pos_z += (this->forward_vector[2] * this->forward_amount);
+ 
+}
+
+
+std::vector< float > Robot::getForwardVec()
+{
+  return this->forward_vector;
+}
 
 
 void Robot::draw()

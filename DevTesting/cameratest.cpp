@@ -207,19 +207,24 @@ void myCBKey(unsigned char key, int x, int y)
 {
    switch (key) {
      case 119: //forward w
-      camera->walk(1);
+     robot->moveFoward();
+     camera->setLookat(camera->getEye_x(), 3.0, camera->getEye_z(), robot->getX(), robot->getY(), robot->getZ());
+     camera->moveCamera(robot->getForwardVec());
      break;
     case 115: //backward s
-      camera->walk(2);
+     // camera->walk(2);
      break;
     case 97: //left a
       camera->rotate_left(robot->getX(), robot->getZ());
-//       robot->turnBodyRight();
+      robot->turnBodyLeft();
+      robot->updateForwardVec(2);
+      
       break;
     case 100: //right d
      
       camera->rotate_right(robot->getX(), robot->getZ());
-     // robot->turnBodyLeft();
+     robot->turnBodyRight();
+     robot->updateForwardVec(1);
       //camera->walk(4);
       break;
     case 102:
