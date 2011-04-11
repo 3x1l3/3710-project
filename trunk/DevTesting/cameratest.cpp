@@ -185,7 +185,7 @@ void CallBackRenderScene(void)
 	 //cout << "iteration is " << a << endl;
        }
        b->setID(j+1 + (i*20));
-       b->SetOrigin( i * (20+roadWidth), 0, j * (20+roadWidth)  );
+       b->SetOrigin( i * (22+roadWidth), 0, j * (22+roadWidth)  );
        city->AddCityBlock( b );
        
        //cout << "Created City Block " << b->getID() << endl;

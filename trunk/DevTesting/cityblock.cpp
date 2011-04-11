@@ -45,7 +45,7 @@ void CityBlock::Draw()
    ///Draws ground area
    glTranslatef(x_coord, y_coord, z_coord);
    
-   //glPushAttrib(GL_CURRENT_COLOR);
+
    glColor3f(0.1, 0.68, 0.1);
    glBegin(GL_QUADS);
    glVertex3f(-15.0, 0.0, 15.0);
@@ -54,6 +54,13 @@ void CityBlock::Draw()
    glVertex3f(-15.0, 0.0, -15.0);
    glEnd();
    //glPopAttrib();
+   glColor3f(23.1, 23.68, 3.1);
+   glBegin(GL_QUADS);
+   glVertex3f(15.0, 0, 15.0+roadWidth/2);
+   glVertex3f(15.0+roadWidth/2,  0, 15.0+roadWidth/2);
+   glVertex3f(15.0+roadWidth/2,  0, 15.0);
+   glVertex3f(15.0, 0, 15.0);
+   glEnd();
    /*
    //drawing the right side street
    glColor3f(1.0, 1.0, 0.1);
