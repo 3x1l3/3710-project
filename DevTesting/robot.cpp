@@ -110,15 +110,29 @@ void Robot::turnHeadForward()
 }
 /////////////////////////BODY ROTATIONS/////////////////////////////////////////////
 void Robot::body_rotate() {
-  float angle_magnitude = 10.0;
+  float angle_magnitude = 8.0;
   switch(this->body_position) {
     case 1:
       if (this->body_angle <= currentForwardAngle)
+      {
 	this->body_angle += angle_magnitude;
+	if(this->body_angle > currentForwardAngle)
+	{
+	  this->body_angle=currentForwardAngle;
+	}
+      }
+      
       break;
+      
     case 2:
       if (this->body_angle >= currentForwardAngle)
-      this->body_angle -= angle_magnitude;
+      {
+	this->body_angle -= angle_magnitude;
+	if(this->body_angle < currentForwardAngle)
+	{
+	  this->body_angle=currentForwardAngle;
+	}
+      }
       break;
       
     case 3:
