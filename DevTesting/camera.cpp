@@ -213,9 +213,9 @@ void Camera::rotate_left(float robot_x, float robot_z) {
 
 void Camera::moveCamera(std::vector< float > forwardVec)
 {
-  this->eye_x -= (forwardVec[0] * -1);
-  this->eye_y -= (forwardVec[1] * -1);
-  this->eye_z -= (forwardVec[2] * -1);
+  this->eye_x -= (forwardVec[0] * -0.5);
+  this->eye_y -= (forwardVec[1] * -0.5);
+  this->eye_z -= (forwardVec[2] * -0.5);
  
 }
 

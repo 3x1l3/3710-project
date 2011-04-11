@@ -17,6 +17,9 @@
 #include "robot.h"
 #include "CityManager.h"
 
+#include <stdio.h>
+#include <math.h>
+
 using std::cout;
 using std::endl;
 
@@ -39,10 +42,20 @@ int cityScale = 3;
 
 float viewing_distance = 5.0; //camera is 5.0 from the robot
 
-Robot* robot = new Robot(15.0, 1.0, 15.0);
-Camera* camera = new Camera(robot->getX(), 3.0, robot->getZ()+viewing_distance, robot->getX(), robot->getY(), robot->getZ());
+float forwardStepsTaken = 0;
 
+int showMoveHint = 0;
 
+Robot* robot = new Robot(18.5, 0.5, -18.5);
+Camera* camera = new Camera(robot->getX(),2.2, robot->getZ()+viewing_distance, robot->getX(), robot->getY(), robot->getZ());
+
+static void PrintString(void *font, char *str)
+{
+   int i,len=strlen(str);
+
+   for(i=0;i < len; i++)
+      glutBitmapCharacter(font,*str++);
+}
 
 /////////////////////////////////////////////////////////
 // Routine which actually does the drawing             //
@@ -70,6 +83,9 @@ void CallBackRenderScene(void)
    
     robot->draw();
    
+
+
+    
    glPushMatrix();
   
    /*
@@ -192,12 +208,30 @@ void CallBackRenderScene(void)
      }
    }
    city->setRoadWidth(roadWidth);
-  city->Draw();
+   city->Draw();
+  
+
    
    glPopMatrix();
    
    ///////////////////////////////////////////////////////
-   
+   char buf[80]; // For our strings.
+   glFlush ();
+    // Display a string
+    // Now we set up a new projection for the text.
+   glLoadIdentity();
+   glFlush ();
+   glOrtho(0,10,0,10,-1.0,1.0);
+   glFlush ();
+   glColor4f(0.6,1.0,0.6,1.00);
+   glFlush ();
+    
+   sprintf(buf,"%s", "left mouse button = changes view to +5 x and y"); // Print the string into a buffer
+   glFlush ();
+   glRasterPos2i(5,5);                         // Set the coordinate
+   glFlush ();
+   PrintString(GLUT_BITMAP_HELVETICA_12, buf);  // Display the string.
+   glFlush ();
    // All done drawing.  Let's show it.
    glutSwapBuffers();
 }
@@ -208,24 +242,41 @@ void myCBKey(unsigned char key, int x, int y)
    switch (key) {
      case 119: //forward w
      robot->moveFoward();
-     camera->setLookat(camera->getEye_x(), 3.0, camera->getEye_z(), robot->getX(), robot->getY(), robot->getZ());
+     camera->setLookat(camera->getEye_x(), 2.2, camera->getEye_z(), robot->getX(), robot->getY(), robot->getZ());
      camera->moveCamera(robot->getForwardVec());
-     break;
-    case 115: //backward s
-     // camera->walk(2);
+     
+     forwardStepsTaken += 0.5;
+     
+     if(fmod(forwardStepsTaken, 37) == 0)
+     {
+       showMoveHint = 1;
+     }
+     else
+     {
+       showMoveHint = 0;
+     }
+   
+     
+   break;
+   
+    case 115: //backwards
      break;
     case 97: //left a
-      camera->rotate_left(robot->getX(), robot->getZ());
-      robot->turnBodyLeft();
-      robot->updateForwardVec(2);
+      if(fmod(forwardStepsTaken, 37) == 0)
+      {
+	camera->rotate_left(robot->getX(), robot->getZ());
+	robot->turnBodyLeft();
+	robot->updateForwardVec(2);
+      }
       
       break;
     case 100: //right d
-     
-      camera->rotate_right(robot->getX(), robot->getZ());
-     robot->turnBodyRight();
-     robot->updateForwardVec(1);
-      //camera->walk(4);
+      if(fmod(forwardStepsTaken, 37) == 0)
+      {
+	camera->rotate_right(robot->getX(), robot->getZ());
+	robot->turnBodyRight();
+	robot->updateForwardVec(1);
+      }
       break;
     case 102:
         
@@ -277,7 +328,6 @@ void mySCBKey(int key, int x, int y) {
      robot->turnBodyRight();
     break;
     case 100:
-     // camera->rotate_left(0.1);
       robot->turnBodyLeft();
       break;
     case 101: //up
