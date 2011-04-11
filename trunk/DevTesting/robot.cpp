@@ -29,7 +29,7 @@ void Robot::init() {
   forward_vector.push_back(0.0);
   forward_vector.push_back(-1.0);
   this->currentForwardAngle = 0;
-  this->forward_amount = 1.0;
+  this->forward_amount = 0.5;
 }
 void Robot::setX(float x)
 {
