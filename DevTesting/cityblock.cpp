@@ -54,13 +54,21 @@ void CityBlock::Draw()
    glVertex3f(-15.0, 0.0, -15.0);
    glEnd();
    //glPopAttrib();
+   
+   
+   //this code draws a white square on the intersection
+   /*
    glColor3f(23.1, 23.68, 3.1);
    glBegin(GL_QUADS);
    glVertex3f(15.0, 0, 15.0+roadWidth/2);
    glVertex3f(15.0+roadWidth/2,  0, 15.0+roadWidth/2);
    glVertex3f(15.0+roadWidth/2,  0, 15.0);
    glVertex3f(15.0, 0, 15.0);
-   glEnd();
+   gl
+   End();
+   */
+   
+   
    /*
    //drawing the right side street
    glColor3f(1.0, 1.0, 0.1);
