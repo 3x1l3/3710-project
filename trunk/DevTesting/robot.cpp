@@ -110,7 +110,7 @@ void Robot::turnHeadForward()
 }
 /////////////////////////BODY ROTATIONS/////////////////////////////////////////////
 void Robot::body_rotate() {
-  float angle_magnitude = 8.0;
+  float angle_magnitude = 15.0;
   switch(this->body_position) {
     case 1:
       if (this->body_angle <= currentForwardAngle)
@@ -258,7 +258,7 @@ void Robot::draw()
    glScalef(0.75, 1.0, 0.75);
    glutSolidCube(1);
    glTranslatef(0.0, 0.0, 0.75);
-   glColor3f(1.0, 0.8, 0.0);
+   glColor3f(13.0, 0.8, 1.0);
    glBegin(GL_QUADS);
     glVertex3f(-0.25, 0.3, 0);
     glVertex3f(0.25, 0.3, 0);

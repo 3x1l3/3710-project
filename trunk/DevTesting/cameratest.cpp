@@ -46,7 +46,12 @@ float forwardStepsTaken = 0;
 
 int showMoveHint = 0;
 
-Robot* robot = new Robot(18.5, 0.5, -18.5);
+float redClearColor = 0;
+float greenClearColor = 1;
+float blueClearColor = 100;
+
+
+Robot* robot = new Robot(314.5, 0.5, 314.5);
 Camera* camera = new Camera(robot->getX(),2.2, robot->getZ()+viewing_distance, robot->getX(), robot->getY(), robot->getZ());
 
 static void PrintString(void *font, char *str)
@@ -62,7 +67,9 @@ static void PrintString(void *font, char *str)
 /////////////////////////////////////////////////////////
 void CallBackRenderScene(void)
 {
-  
+   //clearing the color so we can tell when the robot is able to turn left and right
+   //made the sky turn red when he is able to turn
+   glClearColor(redClearColor,greenClearColor,blueClearColor, 0); 
    
    // Need to manipulate the ModelView matrix to move our model around.
    glMatrixMode(GL_MODELVIEW);
@@ -214,24 +221,19 @@ void CallBackRenderScene(void)
    
    glPopMatrix();
    
-   ///////////////////////////////////////////////////////
-   char buf[80]; // For our strings.
-   glFlush ();
-    // Display a string
-    // Now we set up a new projection for the text.
-   glLoadIdentity();
-   glFlush ();
-   glOrtho(0,10,0,10,-1.0,1.0);
-   glFlush ();
-   glColor4f(0.6,1.0,0.6,1.00);
-   glFlush ();
-    
-   sprintf(buf,"%s", "left mouse button = changes view to +5 x and y"); // Print the string into a buffer
-   glFlush ();
-   glRasterPos2i(5,5);                         // Set the coordinate
-   glFlush ();
-   PrintString(GLUT_BITMAP_HELVETICA_12, buf);  // Display the string.
-   glFlush ();
+   if(showMoveHint == 1)
+   {
+     redClearColor = 1;
+     greenClearColor = 0;
+     blueClearColor = 0;
+   }
+   else
+   {
+     redClearColor = 0;
+     greenClearColor = 1;
+     blueClearColor = 100;
+   }
+
    // All done drawing.  Let's show it.
    glutSwapBuffers();
 }
@@ -374,9 +376,9 @@ void CallBackResizeScene(int Width, int Height)
 void MyInit(int Width, int Height) 
 {
   
-    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+   GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
    GLfloat mat_shininess[] = { 50.0 };
-   GLfloat light_position[] = { 3.0, 3.0, 3.0, 0.5 };
+   GLfloat light_position[] = { 200.0, 400.0, 200.0, 0.5 };
    glShadeModel (GL_SMOOTH);
 
    glEnable(GL_LIGHTING);
@@ -393,7 +395,7 @@ void MyInit(int Width, int Height)
    
    
    // Color to clear color buffer to.
-   glClearColor(20.0/255.0, 20.0/255.0, 205.0/255.0, 0.0f);
+   glClearColor(redClearColor,greenClearColor,blueClearColor, 0);/*(20.0/255.0, 20.0/255.0, 205.0/255.0, 0.0f)*/;
 
    // Depth to clear depth buffer to; type of test.
    glClearDepth(1.0);
