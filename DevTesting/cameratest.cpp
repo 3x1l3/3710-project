@@ -38,6 +38,7 @@ float Z_Off   =-5.0f;
 
 int roadWidth = 15;
 
+CityManager* city;
 int cityScale = 3;
 
 float viewing_distance = 5.0; //camera is 5.0 from the robot
@@ -95,127 +96,7 @@ void CallBackRenderScene(void)
     
    glPushMatrix();
   
-   /*
-   ///Draws ground area
-   glTranslatef(blockX, blockY, blockZ);
-   
-   glColor3f(0.1, 0.1, 0.1);
-   glBegin(GL_QUADS);
-   glVertex3f(-5.0, 0.0, 5.0);
-   glVertex3f(5.0, 0.0, 5.0);
-   glVertex3f(5.0, 0.0, -5.0);
-   glVertex3f(-5.0, 0.0, -5.0);
-   glEnd();
-   */
-      ///Draw a building
-   float buildingX = 1.0;
-   float buildingY = 0;
-   float buildingZ = 0;
-   
-   float xSize = 1.0;
-   float ySize = 5.0 * cityScale;
-   float zSize = 1.0;
-   
-   /*
-   glPushMatrix();
-   glTranslatef(buildingX, buildingY/2, buildingZ);
-   glScalef(xSize, ySize, zSize);
-   glutSolidCube(1.0);
-   glPopMatrix();
-   */
-   
-   
-   Building *bld = new Building();
-   bld->SetOrigin(buildingX, buildingY, buildingZ);
-   bld->SetScale(xSize * cityScale, ySize * cityScale, zSize * cityScale);
-
-   CityBlock *block = new CityBlock();
-   block->AddBuilding(bld);
-   
-   block->AddBuilding( new Building(-2.0 * cityScale, 0.0 * cityScale, -1.0 * cityScale) );
-   bld = new Building(3.0 * cityScale, 0.0 * cityScale, 4.0 * cityScale);
-   bld->SetScale(2.5 * cityScale, 1.0 * cityScale, 1.5 * cityScale);
-   block->AddBuilding(bld);
-   
-   bld = new Building(1.0);
-   bld->SetScale(3.0 * cityScale, 3.0 * cityScale, 3.0 * cityScale);
-   block->AddBuilding(bld);
-   
-   bld = new Building(-4.0, 0.0, 4.0);
-   bld->SetScale(0.5 * cityScale, 7.0 * cityScale, 0.5 * cityScale);
-   bld->SetColor(0, 7.0, 6.7);
-   block->AddBuilding(bld);
-   
-   bld = new Building(-3.7, 0.0, 4.0);
-   bld->SetScale(1.8 * cityScale, 4.0 * cityScale, 1.4 * cityScale);
-   block->AddBuilding(bld);
-   
-   bld = new Building(-1.0, 0.0, 4.0);
-   bld->SetScale(2.5 * cityScale, 3.0 * cityScale, 1.0 * cityScale);
-   block->AddBuilding(bld);
-   
-   bld = new Building(-4.0, 0.0, -4.0);
-   bld->SetScale(1.0 * cityScale, 10.0 * cityScale, 1.0 * cityScale);
-   block->AddBuilding(bld);
-   
-   bld = new Building(3.0, 0.0, -3.1);
-   bld->SetColor(1.0, 0.50, 0.50);
-   bld->SetScale(2.7 * cityScale, 1.7 * cityScale, 2.9 * cityScale);
-   block->AddBuilding(bld);
-   
-   bld = new Building(4.5, 0.0, -0.5);
-   bld->SetColor(0.33, 0.33, 0.33);
-   bld->SetScale(1.0 * cityScale, 6.0 * cityScale, 1.5 * cityScale);
-   block->AddBuilding(bld);
-   
-   bld = new Building(-4.0, 0.0, 0.0);
-   bld->SetColor(0.2, 0.2, 0.2);
-   bld->SetScale(1.0 * cityScale, 4.0 * cityScale, 5.8 * cityScale);
-   block->AddBuilding(bld);
-   
-   bld = new Building(2.9, 0.0, 2.0);
-   bld->SetColor(0.3, 0.3, 0.47);
-   bld->SetScale(1.0 * cityScale, 9.0 * cityScale, 1.3 * cityScale);
-   block->AddBuilding(bld);
-      
-   /*
-   ///Again
-   glPushMatrix();
-   glTranslatef(-2.0, 3.0, 3.0);
-   glScalef(1.5, 3.0, 1.0);
-   glutSolidCube(2.0);
-   glPopMatrix();
-   */
-   
-   
-   CityManager *city = new CityManager(); 
-   
-   CityBlock *b;
-   for(int i = 0; i < 20; i++)
-   {
-     for(int j = 0; j < 20; j++)
-     { 
-       b = new CityBlock();
-       *b = *block;
-       
-       //We want to give every building an ID number
-       //syntax is ...QXXX where Q is the block is belongs to.
-       //we assume a max of 999 buildings per block.
-       //cout << b->getBuildingCount() << endl;
-       for(int a = 0; a < b->getBuildingCount(); a++)
-       {
-	 b->BuildingAt(a)->setBuildingID((((j+1)+(i*20)) * 1000) + (a+1));
-	 //cout << "iteration is " << a << endl;
-       }
-       b->setID(j+1 + (i*20));
-       b->SetOrigin( i * (22+roadWidth), 0, j * (22+roadWidth)  );
-       city->AddCityBlock( b );
-       
-       //cout << "Created City Block " << b->getID() << endl;
-     }
-   }
-   city->setRoadWidth(roadWidth);
-   city->Draw();
+     city->Draw();
   
 
    
@@ -406,6 +287,143 @@ void MyInit(int Width, int Height)
 
    // Load up the correct perspective matrix; using a callback directly.
    CallBackResizeScene(Width,Height);
+   
+   //*******************************************************************************************//
+   
+   {   //Moved Building initialization here, so it doesn't remake the city randomly on every draw
+    /*
+   ///Draws ground area
+   glTranslatef(blockX, blockY, blockZ);
+   
+   glColor3f(0.1, 0.1, 0.1);
+   glBegin(GL_QUADS);
+   glVertex3f(-5.0, 0.0, 5.0);
+   glVertex3f(5.0, 0.0, 5.0);
+   glVertex3f(5.0, 0.0, -5.0);
+   glVertex3f(-5.0, 0.0, -5.0);
+   glEnd();
+   */
+      ///Draw a building
+   float buildingX = 1.0;
+   float buildingY = 0;
+   float buildingZ = 0;
+   
+   float xSize = 1.0;
+   float ySize = 5.0 * cityScale;
+   float zSize = 1.0;
+   
+   /*
+   glPushMatrix();
+   glTranslatef(buildingX, buildingY/2, buildingZ);
+   glScalef(xSize, ySize, zSize);
+   glutSolidCube(1.0);
+   glPopMatrix();
+   */
+   
+   
+   Building *bld = new Building();
+   bld->SetOrigin(buildingX, buildingY, buildingZ);
+   bld->SetScale(xSize * cityScale, ySize * cityScale, zSize * cityScale);
+
+   CityBlock *block = new CityBlock();
+   block->AddBuilding(bld);
+   
+   block->AddBuilding( new Building(-2.0 * cityScale, 0.0 * cityScale, -1.0 * cityScale) );
+   bld = new Building(3.0 * cityScale, 0.0 * cityScale, 4.0 * cityScale);
+   bld->SetScale(2.5 * cityScale, 1.0 * cityScale, 1.5 * cityScale);
+   block->AddBuilding(bld);
+   
+   bld = new Building(1.0);
+   bld->SetScale(3.0 * cityScale, 3.0 * cityScale, 3.0 * cityScale);
+   block->AddBuilding(bld);
+   
+   bld = new Building(-4.0, 0.0, 4.0);
+   bld->SetScale(0.5 * cityScale, 7.0 * cityScale, 0.5 * cityScale);
+   bld->SetColor(0, 7.0, 6.7);
+   block->AddBuilding(bld);
+   
+   bld = new Building(-3.7, 0.0, 4.0);
+   bld->SetScale(1.8 * cityScale, 4.0 * cityScale, 1.4 * cityScale);
+   block->AddBuilding(bld);
+   
+   bld = new Building(-1.0, 0.0, 4.0);
+   bld->SetScale(2.5 * cityScale, 3.0 * cityScale, 1.0 * cityScale);
+   block->AddBuilding(bld);
+   
+   bld = new Building(-4.0, 0.0, -4.0);
+   bld->SetScale(1.0 * cityScale, 10.0 * cityScale, 1.0 * cityScale);
+   block->AddBuilding(bld);
+   
+   bld = new Building(3.0, 0.0, -3.1);
+   bld->SetColor(1.0, 0.50, 0.50);
+   bld->SetScale(2.7 * cityScale, 1.7 * cityScale, 2.9 * cityScale);
+   block->AddBuilding(bld);
+   
+   bld = new Building(4.5, 0.0, -0.5);
+   bld->SetColor(0.33, 0.33, 0.33);
+   bld->SetScale(1.0 * cityScale, 6.0 * cityScale, 1.5 * cityScale);
+   block->AddBuilding(bld);
+   
+   bld = new Building(-4.0, 0.0, 0.0);
+   bld->SetColor(0.2, 0.2, 0.2);
+   bld->SetScale(1.0 * cityScale, 4.0 * cityScale, 5.8 * cityScale);
+   block->AddBuilding(bld);
+   
+   bld = new Building(2.9, 0.0, 2.0);
+   bld->SetColor(0.3, 0.3, 0.47);
+   bld->SetScale(1.0 * cityScale, 9.0 * cityScale, 1.3 * cityScale);
+   block->AddBuilding(bld);
+      
+   /*
+   ///Again
+   glPushMatrix();
+   glTranslatef(-2.0, 3.0, 3.0);
+   glScalef(1.5, 3.0, 1.0);
+   glutSolidCube(2.0);
+   glPopMatrix();
+   */
+   
+   
+   city = new CityManager(); 
+   
+   CityBlock *b;
+   for(int i = 0; i < 20; i++)
+   {
+     for(int j = 0; j < 20; j++)
+     { 
+       b = new CityBlock();
+       
+       int var = 0; 
+       for(int jabber = 0; jabber < 4; jabber++)
+       {
+	 var = rand() % block->getBuildingCount();
+	 b->AddBuilding( block->BuildingAt(var) );
+       }
+       
+       //We want to give every building an ID number
+       //syntax is ...QXXX where Q is the block is belongs to.
+       //we assume a max of 999 buildings per block.
+       //cout << b->getBuildingCount() << endl;
+       for(int a = 0; a < b->getBuildingCount(); a++)
+       {
+	 b->BuildingAt(a)->setBuildingID((((j+1)+(i*20)) * 1000) + (a+1));
+	 //cout << "iteration is " << a << endl;
+       }
+       b->setID(j+1 + (i*20));
+       b->SetOrigin( i * (22+roadWidth), 0, j * (22+roadWidth)  );
+       city->AddCityBlock( b );
+       
+       //cout << "Created City Block " << b->getID() << endl;
+     }
+   }
+   city->setRoadWidth(roadWidth);
+
+    
+  }
+   
+   //*******************************************************************************************//
+   
+   
 }
 
 ///////////////////////////////////////////////////
