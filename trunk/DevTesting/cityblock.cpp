@@ -46,6 +46,7 @@ void CityBlock::Draw()
    glTranslatef(x_coord, y_coord, z_coord);
    
 
+   glPushAttrib(GL_COLOR_BUFFER_BIT);
    glColor3f(0.1, 0.68, 0.1);
    glBegin(GL_QUADS);
    glVertex3f(-15.0, 0.0, 15.0);
@@ -53,7 +54,7 @@ void CityBlock::Draw()
    glVertex3f(15.0, 0.0, -15.0);
    glVertex3f(-15.0, 0.0, -15.0);
    glEnd();
-   //glPopAttrib();
+   glPopAttrib();
    
    
    //this code draws a white square on the intersection
@@ -107,11 +108,14 @@ void CityBlock::Draw()
    glEnd();
    
 */
+   //srand();
    
-   for(unsigned i = 0; i < buildings.size(); i++)
+   for(unsigned x = 0; x < buildings.size(); x++)
    {
-     glColor3f( buildings.at(i)->GetRed(), buildings.at(i)->GetGreen(), buildings.at(i)->GetBlue() );
-     buildings.at(i)->Draw();
+     
+     //unsigned x = rand() % buildings.size();
+     glColor3f( buildings.at(x)->GetRed(), buildings.at(x)->GetGreen(), buildings.at(x)->GetBlue() );
+     buildings.at(x)->Draw();
    }
    
    glPopMatrix();

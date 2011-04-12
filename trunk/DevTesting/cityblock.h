@@ -7,6 +7,7 @@
 
 #include <vector>
 #include "building.h"
+#include <time.h>
 using std::vector;
 
 class CityBlock
