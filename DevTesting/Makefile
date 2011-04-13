@@ -5,7 +5,7 @@ COMPILERFLAGS = -Wall -g
 CC = g++
 CFLAGS = $(COMPILERFLAGS) $(INCLUDE)
 LIBRARIES = -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm
-OBJS = cameratest.o camera.o building.o cityblock.o CityManager.o robot.o
+OBJS = cameratest.o camera.o  building.o ConeBuilding.o SphereBuilding.o TorusBuilding.o SquareBuilding.o Pylon.o cityblock.o CityManager.o robot.o 
 
 all: cameratest
 
@@ -18,7 +18,14 @@ include .depend
 cameratest: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^  $(LIBDIR) $(LIBRARIES)
 
+Pylon.o : building.o
+SphereBuilding.o : building.o
+TorusBuilding.o : building.o
+ConeBuilding.o : building.o
+SquareBuilding.o : building.o
+
 cityblock.o : building.o
+cityblock.o : ConeBuilding.o
 
 CityManager.o : cityblock.o
 

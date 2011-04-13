@@ -12,6 +12,12 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
+#include <iostream>
+#include <iostream>
+#include <stdlib.h>  // Useful for the following includes.
+#include <stdio.h>    
+#include <string.h>  // For spring operations.
+
 
 class Building
 {
@@ -22,7 +28,7 @@ class Building
     void SetColor(float, float, float);
     void SetOrigin(float, float, float);
     void SetScale(float, float, float);
-    void Draw();
+    virtual void Draw() = 0;
     
     void setBuildingID(int newID);
     int getBuildingID();
@@ -34,7 +40,6 @@ class Building
     
   protected:
 	
-  private:
     float x, y, z;
     int buildingID;
     
