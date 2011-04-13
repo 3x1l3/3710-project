@@ -62,6 +62,9 @@ float turnArrowExtraRot = 0;
 Robot* robot = new Robot(314.5, 0.5, 314.5);
 Camera* camera = new Camera(robot->getX(),1.5, robot->getZ()+viewing_distance, robot->getX(), robot->getY(), robot->getZ());
 
+
+bool arrowDirection = false;
+
 static void PrintString(void *font, char *str)
 {
    int i,len=strlen(str);
@@ -74,13 +77,30 @@ static void drawTurningArrows()
 {
   glPushMatrix();
     glColor3f(1.0, 1.0, 0.0);
-    glTranslatef( robot->getX() - 1, robot->getY() + 1, robot->getZ());
-    glRotatef(-90.0, 0.0, 1.0, 0.0);
+    
+    //based off of where we're looking
+    if(!arrowDirection)
+    {
+      glTranslatef( robot->getX() - 1, robot->getY() + 1, robot->getZ());
+      glRotatef(-90.0, 0.0, 1.0, 0.0);
+    }
+    else
+    {
+      glTranslatef( robot->getX(), robot->getY() + 1, robot->getZ() - 1);
+      glRotatef(-180.0, 0.0, 1.0, 0.0);
+    }
     glutSolidCone(0.5, 0.5, 20, 20);
   glPopMatrix();
   glPushMatrix();
+  
+  //setup based on crossroad direction
+  if(!arrowDirection)
+  {
     glTranslatef( robot->getX() + 1, robot->getY() + 1, robot->getZ());
     glRotatef(90.0, 0.0, 1.0, 0.0);
+  }
+  else
+    glTranslatef( robot->getX(), robot->getY() + 1, robot->getZ()+1);
     glutSolidCone(0.5, 0.5, 20, 20);
   glPopMatrix();
 
@@ -174,6 +194,7 @@ void myCBKey(unsigned char key, int x, int y)
     case 97: //left a
       if(fmod(forwardStepsTaken, 37) == 0)
       {
+	arrowDirection = !arrowDirection;
 	camera->rotate_left(robot->getX(), robot->getZ());
 	robot->turnBodyLeft();
 	robot->updateForwardVec(2);
@@ -184,6 +205,7 @@ void myCBKey(unsigned char key, int x, int y)
     case 100: //right d
       if(fmod(forwardStepsTaken, 37) == 0)
       {
+	      arrowDirection = !arrowDirection;
 	camera->rotate_right(robot->getX(), robot->getZ());
 	robot->turnBodyRight();
 	robot->updateForwardVec(1);
@@ -232,13 +254,12 @@ void mySCBKey(int key, int x, int y) {
       camera->viewFL(robot->getX(), robot->getZ());
       break; 
     
+    //right arrow key
     case 102:
      //camera->rotate_right(0.1);
-     
-     
-     
      robot->turnBodyRight();
-    break;
+     break;
+    
     case 100:
       robot->turnBodyLeft();
       break;
