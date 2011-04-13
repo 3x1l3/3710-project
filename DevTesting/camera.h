@@ -47,7 +47,7 @@ class Camera {
     void rotate_down(float);
     void walk(int);
     void moveCamera(std::vector<float>);
-    void viewDefault();
+    void viewDefault(float, float, std::vector<float>);
     void viewBR(float, float);
     void viewBL(float, float);
     void viewFR(float, float);
