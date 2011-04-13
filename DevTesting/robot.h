@@ -54,6 +54,7 @@ class Robot {
     void body_rotate();
     void updateForwardVec(int);
     vector<float> getForwardVec();
+    void moveBackward();
   
   
 };
