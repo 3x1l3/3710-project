@@ -1,7 +1,13 @@
 cameratest.o: cameratest.cpp camera.h building.h cityblock.h robot.h \
- CityManager.h
+ CityManager.h ConeBuilding.h SquareBuilding.h TorusBuilding.h \
+ SphereBuilding.h Pylon.h
 camera.o: camera.cpp camera.h
 building.o: building.cpp building.h
+ConeBuilding.o: ConeBuilding.cpp ConeBuilding.h building.h
+SphereBuilding.o: SphereBuilding.cpp SphereBuilding.h building.h
+TorusBuilding.o: TorusBuilding.cpp TorusBuilding.h building.h
+SquareBuilding.o: SquareBuilding.cpp SquareBuilding.h building.h
+Pylon.o: Pylon.cpp Pylon.h building.h
 cityblock.o: cityblock.cpp cityblock.h building.h
 CityManager.o: CityManager.cpp CityManager.h cityblock.h building.h
 robot.o: robot.cpp robot.h

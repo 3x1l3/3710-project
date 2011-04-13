@@ -20,6 +20,12 @@
 #include <stdio.h>
 #include <math.h>
 
+#include "ConeBuilding.h"
+#include "SquareBuilding.h"
+#include "TorusBuilding.h"
+#include "SphereBuilding.h"
+#include "Pylon.h"
+
 using std::cout;
 using std::endl;
 
@@ -54,7 +60,7 @@ float blueClearColor = 100;
 float turnArrowExtraRot = 0;
 
 Robot* robot = new Robot(314.5, 0.5, 314.5);
-Camera* camera = new Camera(robot->getX(),2.2, robot->getZ()+viewing_distance, robot->getX(), robot->getY(), robot->getZ());
+Camera* camera = new Camera(robot->getX(),1.5, robot->getZ()+viewing_distance, robot->getX(), robot->getY(), robot->getZ());
 
 static void PrintString(void *font, char *str)
 {
@@ -114,8 +120,7 @@ void CallBackRenderScene(void)
     
    glPushMatrix();
   
-     city->Draw();
-  
+   city->Draw();  
 
    
    glPopMatrix();
@@ -147,7 +152,7 @@ void myCBKey(unsigned char key, int x, int y)
    switch (key) {
      case 119: //forward w
      robot->moveFoward();
-     camera->setLookat(camera->getEye_x(), 2.2, camera->getEye_z(), robot->getX(), robot->getY(), robot->getZ());
+     camera->setLookat(camera->getEye_x(), 1.5, camera->getEye_z(), robot->getX(), robot->getY(), robot->getZ());
      camera->moveCamera(robot->getForwardVec());
      
      forwardStepsTaken += 0.5;
@@ -345,58 +350,99 @@ void MyInit(int Width, int Height)
    */
    
    
-   Building *bld = new Building();
+   SquareBuilding *bld = new SquareBuilding();
    bld->SetOrigin(buildingX, buildingY, buildingZ);
    bld->SetScale(xSize * cityScale, ySize * cityScale, zSize * cityScale);
 
    CityBlock *block = new CityBlock();
-   block->AddBuilding(bld);
+   //block->AddBuilding(bld);
    
-   block->AddBuilding( new Building(-2.0 * cityScale, 0.0 * cityScale, -1.0 * cityScale) );
-   bld = new Building(3.0 * cityScale, 0.0 * cityScale, 4.0 * cityScale);
+//    block->AddBuilding( new SquareBuilding(2.0 * cityScale, 0.0 * cityScale, 1.0 * cityScale) );
+   bld = new SquareBuilding(3.0 * cityScale, 1.0 * cityScale, 4.0 * cityScale);
    bld->SetScale(2.5 * cityScale, 1.0 * cityScale, 1.5 * cityScale);
    block->AddBuilding(bld);
    
-   bld = new Building(1.0);
+   bld = new SquareBuilding(1.0);
    bld->SetScale(3.0 * cityScale, 3.0 * cityScale, 3.0 * cityScale);
    block->AddBuilding(bld);
    
-   bld = new Building(-4.0, 0.0, 4.0);
+   bld = new SquareBuilding(-6.0, 0.0, 6.0);
    bld->SetScale(0.5 * cityScale, 7.0 * cityScale, 0.5 * cityScale);
    bld->SetColor(0, 7.0, 6.7);
    block->AddBuilding(bld);
    
-   bld = new Building(-3.7, 0.0, 4.0);
+   bld = new SquareBuilding(-3.7, 0.0, 8.0);
    bld->SetScale(1.8 * cityScale, 4.0 * cityScale, 1.4 * cityScale);
    block->AddBuilding(bld);
    
-   bld = new Building(-1.0, 0.0, 4.0);
+   bld = new SquareBuilding(-6.0, 0.0, 4.0);
    bld->SetScale(2.5 * cityScale, 3.0 * cityScale, 1.0 * cityScale);
    block->AddBuilding(bld);
    
-   bld = new Building(-4.0, 0.0, -4.0);
+   bld = new SquareBuilding(-8.0, 0.0, -4.0);
    bld->SetScale(1.0 * cityScale, 10.0 * cityScale, 1.0 * cityScale);
    block->AddBuilding(bld);
    
-   bld = new Building(3.0, 0.0, -3.1);
+   bld = new SquareBuilding(5.0, 0.0, -5.1);
    bld->SetColor(1.0, 0.50, 0.50);
    bld->SetScale(2.7 * cityScale, 1.7 * cityScale, 2.9 * cityScale);
    block->AddBuilding(bld);
    
-   bld = new Building(4.5, 0.0, -0.5);
+   bld = new SquareBuilding(7.5, 0.0, -4.5);
    bld->SetColor(0.33, 0.33, 0.33);
    bld->SetScale(1.0 * cityScale, 6.0 * cityScale, 1.5 * cityScale);
    block->AddBuilding(bld);
    
-   bld = new Building(-4.0, 0.0, 0.0);
+   bld = new SquareBuilding(-4.0, 0.0, 0.0);
    bld->SetColor(0.2, 0.2, 0.2);
    bld->SetScale(1.0 * cityScale, 4.0 * cityScale, 5.8 * cityScale);
    block->AddBuilding(bld);
    
-   bld = new Building(2.9, 0.0, 2.0);
+   bld = new SquareBuilding(2.9, 0.0, 2.0);
    bld->SetColor(0.3, 0.3, 0.47);
    bld->SetScale(1.0 * cityScale, 9.0 * cityScale, 1.3 * cityScale);
    block->AddBuilding(bld);
+   
+   SphereBuilding *sphere = new SphereBuilding(-10, -1.8, -7.0);
+   sphere->SetColor(0.3, 0.3, 0.47);
+   sphere->SetScale(1.7 * cityScale, 1.7 * cityScale, 1.7 * cityScale);
+   block->AddBuilding(sphere);
+   
+   sphere = new SphereBuilding(10, -1.8, 7.0);
+   sphere->SetColor(0.3, 0.3, 0.47);
+   sphere->SetScale(1.3 * cityScale, 1.3 * cityScale, 1.0 * cityScale);
+   block->AddBuilding(sphere);
+   
+   bld = new SquareBuilding(1, 0.0, 1.0);
+   bld->SetColor(0.3, 0.3, 0.47);
+   bld->SetScale(1.0 * cityScale, 9.0 * cityScale, 1.3 * cityScale);
+   block->AddBuilding(bld);
+   
+//    TorusBuilding *torus = new TorusBuilding(-8, 5, -3.0);
+//    torus->SetColor(0.3, 0.3, 0.47);
+//    torus->SetScale(2.0 * cityScale, 2.0 * cityScale, 2 * cityScale);
+//    block->AddBuilding(torus);
+   
+   ConeBuilding *cone = new ConeBuilding(8, 0, 6.0);
+   cone->SetColor(0.3, 0.3, 0.47);
+   cone->SetScale(0.5 * cityScale, 0.5 * cityScale, 0.9 * cityScale);
+   block->AddBuilding(cone);
+   
+   cone = new ConeBuilding(-4, 0, -7.5);
+   cone->SetColor(0.3, 0.3, 0.47);
+   cone->SetScale(0.7 * cityScale, 0.7 * cityScale, 0.5 * cityScale);
+   block->AddBuilding(cone);
+   
+   Pylon *pylon = new Pylon(0, 0.7, -8.0);
+   pylon->SetColor(0.3, 0.3, 0.47);
+   pylon->SetScale(0.5 * cityScale, 0.5 * cityScale, 0.5 * cityScale);
+   block->AddBuilding(pylon);
+   
+   pylon = new Pylon(3, 0.7, -2.0);
+   pylon->SetColor(0.3, 0.3, 0.47);
+   pylon->SetScale(0.5 * cityScale, 0.5 * cityScale, 0.5 * cityScale);
+   block->AddBuilding(pylon);
+   
       
    /*
    ///Again

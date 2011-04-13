@@ -43,21 +43,6 @@ void Building::SetScale(float sX, float sY, float sZ)
   zSize = sZ;
 }
 
-void Building::Draw()
-{
-   glPushMatrix();
-   glPushAttrib(GL_CURRENT_COLOR); //may or may not work
-   glTranslatef(x, ySize / 2 , z);  // ySize/2 because we only need to scale up half the vertical height of the object
-   glScalef(xSize, ySize, zSize);
-   
-   //glColor3f(_red, _green, _blue);
-   glMaterialf ( GL_FRONT_AND_BACK, GL_AMBIENT, 1.0) ;
-
-   glutSolidCube(1.0);
-   glPopAttrib();			//matched with PushAttrib above.
-   glPopMatrix();
-}
-
 ///   COLOR METHODS   ///
 
 void Building::SetColor(float r , float g , float b )
