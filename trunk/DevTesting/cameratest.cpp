@@ -51,6 +51,7 @@ float redClearColor = 0;
 float greenClearColor = 1;
 float blueClearColor = 100;
 
+float turnArrowExtraRot = 0;
 
 Robot* robot = new Robot(314.5, 0.5, 314.5);
 Camera* camera = new Camera(robot->getX(),2.2, robot->getZ()+viewing_distance, robot->getX(), robot->getY(), robot->getZ());
@@ -62,6 +63,23 @@ static void PrintString(void *font, char *str)
    for(i=0;i < len; i++)
       glutBitmapCharacter(font,*str++);
 }
+
+static void drawTurningArrows()
+{
+  glPushMatrix();
+    glColor3f(1.0, 1.0, 0.0);
+    glTranslatef( robot->getX() - 1, robot->getY() + 1, robot->getZ());
+    glRotatef(-90.0, 0.0, 1.0, 0.0);
+    glutSolidCone(0.5, 0.5, 20, 20);
+  glPopMatrix();
+  glPushMatrix();
+    glTranslatef( robot->getX() + 1, robot->getY() + 1, robot->getZ());
+    glRotatef(90.0, 0.0, 1.0, 0.0);
+    glutSolidCone(0.5, 0.5, 20, 20);
+  glPopMatrix();
+
+}
+
 
 /////////////////////////////////////////////////////////
 // Routine which actually does the drawing             //
@@ -107,12 +125,16 @@ void CallBackRenderScene(void)
      redClearColor = 1;
      greenClearColor = 0;
      blueClearColor = 0;
-   }
+     glPushMatrix();
+
+      drawTurningArrows();
+     glPopMatrix();
+  }
    else
    {
      redClearColor = 0;
-     greenClearColor = 1;
-     blueClearColor = 100;
+     greenClearColor = 0.3;
+     blueClearColor = 1.0;
    }
 
    // All done drawing.  Let's show it.
@@ -150,6 +172,7 @@ void myCBKey(unsigned char key, int x, int y)
 	camera->rotate_left(robot->getX(), robot->getZ());
 	robot->turnBodyLeft();
 	robot->updateForwardVec(2);
+	turnArrowExtraRot+=1;
       }
       
       break;
@@ -159,6 +182,7 @@ void myCBKey(unsigned char key, int x, int y)
 	camera->rotate_right(robot->getX(), robot->getZ());
 	robot->turnBodyRight();
 	robot->updateForwardVec(1);
+	turnArrowExtraRot+=1;
       }
       break;
     case 102:
