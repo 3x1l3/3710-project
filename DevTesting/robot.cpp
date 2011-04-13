@@ -254,8 +254,9 @@ void Robot::draw()
     
    //Body
    glPushMatrix();
-   glPushAttrib(GL_COLOR_BUFFER_BIT);
+  // glPushAttrib(GL_COLOR_BUFFER_BIT);
    glScalef(0.75, 1.0, 0.75);
+   glColor3f(0.2, 0.5, 0.5);
    glutSolidCube(1);
    glTranslatef(0.0, 0.0, 0.51);
    glColor3f(13.0, 0.8, 1.0);
@@ -275,7 +276,7 @@ void Robot::draw()
      glVertex3f(-0.3, 0.0, 0.0);
    glEnd();
 
-   glPopAttrib();
+   //glPopAttrib();
    glPopMatrix();
    
    //neck
