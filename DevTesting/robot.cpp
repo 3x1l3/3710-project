@@ -257,15 +257,15 @@ void Robot::draw()
    glPushAttrib(GL_COLOR_BUFFER_BIT);
    glScalef(0.75, 1.0, 0.75);
    glutSolidCube(1);
-   glTranslatef(0.0, 0.0, 0.75);
+   glTranslatef(0.0, 0.0, 0.51);
    glColor3f(13.0, 0.8, 1.0);
    glBegin(GL_QUADS);
-    glVertex3f(-0.25, 0.3, 0);
-    glVertex3f(0.25, 0.3, 0);
-    glVertex3f(0.25, -0.3, 0);
-    glVertex3f(-0.25, -0.3, 0);
+    glVertex3f(-0.30, 0.3, 0);
+    glVertex3f(0.30, 0.3, 0);
+    glVertex3f(0.30, -0.3, 0);
+    glVertex3f(-0.30, -0.3, 0);
    glEnd();
-   glTranslatef(0.0, 0.1, -1.50);
+   glTranslatef(0.0, 0.1, -1.02);
    glBegin(GL_TRIANGLES);
      glVertex3f(0.0, 0.0, 0.0);
      glVertex3f(0.3, -0.3, 0.0);
@@ -298,6 +298,9 @@ void Robot::draw()
    
    //eyes
    glPushMatrix();
+   GLfloat redEye[] = {1.0, 0.0, 0.0, 0.1};
+   glColor3fv(redEye);
+   glMaterialfv(GL_FRONT, GL_SPECULAR, redEye);
    glRotatef(this->head_angle, 0.0, 1.0, 0.0);
    glTranslatef(-0.10, 1.1, 0.3);
    glutSolidSphere(0.05, 15, 15);
