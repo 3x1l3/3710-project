@@ -224,11 +224,16 @@ void Robot::updateForwardVec(int direction)
 
 void Robot::moveFoward()
 {
-  
   this->pos_x += (this->forward_vector[0] * this->forward_amount);
   this->pos_y += (this->forward_vector[1] * this->forward_amount);
   this->pos_z += (this->forward_vector[2] * this->forward_amount);
- 
+}
+
+void Robot::moveBackward()
+{
+  this->pos_x -= (this->forward_vector[0] * this->forward_amount);
+  this->pos_y -= (this->forward_vector[1] * this->forward_amount);
+  this->pos_z -= (this->forward_vector[2] * this->forward_amount);
 }
 
 

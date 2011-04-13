@@ -22,6 +22,7 @@
 
 #include "ConeBuilding.h"
 #include "SquareBuilding.h"
+#include <vector>
 #include "TorusBuilding.h"
 #include "SphereBuilding.h"
 #include "Pylon.h"
@@ -127,12 +128,7 @@ void CallBackRenderScene(void)
    
    //cout << camera->getAt_x() <<  " " << camera->getAt_y() << " " << camera->getAt_z() << endl;
    camera->lookat();
-   /*
-   gluLookAt(3.0, 3.0, 3.0, 
-	     0.0, 0.0, 0.0, 
-	     0.0, 1.0, 0.0);
-   */
-   
+
     robot->draw();
    
 
@@ -152,7 +148,7 @@ void CallBackRenderScene(void)
      blueClearColor = 0;
      glPushMatrix();
 
-      drawTurningArrows();
+     drawTurningArrows();
      glPopMatrix();
   }
    else
@@ -169,6 +165,9 @@ void CallBackRenderScene(void)
 
 void myCBKey(unsigned char key, int x, int y)
 {
+    std::vector<float> test;
+    float flt;
+  
    switch (key) {
      case 119: //forward w
      robot->moveFoward();
@@ -188,8 +187,38 @@ void myCBKey(unsigned char key, int x, int y)
    
      
    break;
-   
+
     case 115: //backwards
+     //changes the x pos of robbot by negative 0.5
+     robot->moveBackward();
+     
+     camera->setLookat(camera->getEye_x(), 1.5, camera->getEye_z(), robot->getX(), robot->getY(), robot->getZ());
+     
+     //get the forwaed vector and put it into a local variable test
+     test.push_back(robot->getForwardVec()[0]);
+     test.push_back(robot->getForwardVec()[1]);
+     test.push_back(robot->getForwardVec()[2]);
+     //invert the forward vector to make it a backwards vector
+     test[0] = -test[0];
+     test[1] = -test[1];
+     test[2] = -test[2];
+     //send the test vector with the backwards vector into the move camera function the camera can follow.
+     camera->moveCamera(test);
+     
+     //following code is the same as the forward case
+     forwardStepsTaken -= 0.5;
+     
+     if(fmod(forwardStepsTaken, 37) == 0)
+     {
+       showMoveHint = 1;
+     }
+     else
+     {
+       showMoveHint = 0;
+     }
+     
+     
+     
      break;
     case 97: //left a
       if(fmod(forwardStepsTaken, 37) == 0)
@@ -205,7 +234,7 @@ void myCBKey(unsigned char key, int x, int y)
     case 100: //right d
       if(fmod(forwardStepsTaken, 37) == 0)
       {
-	      arrowDirection = !arrowDirection;
+	arrowDirection = !arrowDirection;
 	camera->rotate_right(robot->getX(), robot->getZ());
 	robot->turnBodyRight();
 	robot->updateForwardVec(1);
