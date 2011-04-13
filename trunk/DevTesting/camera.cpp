@@ -285,10 +285,10 @@ void Camera::rotate_up(float angle) {
    this->xaxis_rotation_pos -= angle; 
   }
 }
-void Camera::viewDefault()
+void Camera::viewDefault(float robot_x, float robot_z, std::vector<float> forwardVec)
 {
-  this->eye_x = this->deye_x;
-  this->eye_z = this->deye_z;
+  this->eye_x = (robot_x - (forwardVec[0]*this->eyefromat));
+  this->eye_z = (robot_z - (forwardVec[2]*this->eyefromat));
   this->default_view_set = false;
   this->state = "D";
 }

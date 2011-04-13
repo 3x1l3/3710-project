@@ -188,7 +188,7 @@ void mySCBKey(int key, int x, int y) {
       break;
       
     case 4:
-      camera->viewDefault();
+      camera->viewDefault(robot->getX(), robot->getZ(), robot->getForwardVec());
       break;
     case 5:
       camera->viewBL(robot->getX(), robot->getZ());
