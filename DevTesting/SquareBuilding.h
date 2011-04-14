@@ -25,7 +25,7 @@ class SquareBuilding : public Building
     SquareBuilding(float x = 0, float y = 0, float z = 0);
     ~SquareBuilding();
 
-    void Draw();
+    void Draw(GLenum mode);
 };
 
 #endif

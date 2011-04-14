@@ -1,5 +1,6 @@
 #define PROGRAM_TITLE "Final Project"
 #define DISPLAY_INFO "Klassen, Chad   Racine, Jason    Jordan, Peoples   Shepley, Adam"
+#define SIZE 512
 
 #include <iostream>
 #include <stdlib.h>  // Useful for the following includes.
@@ -12,6 +13,7 @@
 
 #include "camera.h"
 #include "building.h"
+
 #include "cityblock.h"
 #include "math.h"
 #include "robot.h"
@@ -65,6 +67,7 @@ Camera* camera = new Camera(robot->getX(),1.5, robot->getZ()+viewing_distance, r
 
 
 bool arrowDirection = false;
+vector<int> destroyed;
 
 static void PrintString(void *font, char *str)
 {
@@ -136,7 +139,7 @@ void CallBackRenderScene(void)
     
    glPushMatrix();
   
-   city->Draw();  
+   city->Draw(GL_RENDER);  
 
    
    glPopMatrix();
@@ -158,6 +161,7 @@ void CallBackRenderScene(void)
      blueClearColor = 1.0;
    }
 
+  
    // All done drawing.  Let's show it.
    glutSwapBuffers();
 }
@@ -166,7 +170,7 @@ void CallBackRenderScene(void)
 void myCBKey(unsigned char key, int x, int y)
 {
     std::vector<float> test;
-    float flt;
+   
   
    switch (key) {
      case 119: //forward w
@@ -305,8 +309,71 @@ void mySCBKey(int key, int x, int y) {
   
 }
 
+/*
+  Mouse Callback function for selecting
+
+*/
+void processHits (GLint hits, GLuint buffer[])
+{
+   unsigned int i, j;
+   GLint names, *ptr;
+
+   //printf ("hits = %d\n", hits);
+   ptr = (GLint *) buffer; 
+   for (i = 0; i < hits; i++) {	/*  for each hit  */
+      names = *ptr;
+	   ptr+=3;
+      for (j = 0; j < names; j++) { /*  for each name */
+	  //cout << (*ptr) << endl;
+         if(*ptr!=0) 
+	   destroyed.push_back(*ptr);
+         ptr++;
+      }
+      //printf ("\n");
+   }
+   
+  
+}
+
+void mouse(int button, int state, int x, int y)
+{
+   GLuint selectBuf[SIZE];
+   GLint hits;
+   GLint viewport[4];
+
+   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) 
+   {
+   	glGetIntegerv (GL_VIEWPORT, viewport);
+
+   	glSelectBuffer (SIZE, selectBuf);
+   	glRenderMode(GL_SELECT);
+
+   	glInitNames();
+   	glPushName(0);
 
 
+   	glMatrixMode (GL_PROJECTION);
+   	glPushMatrix ();
+   	glLoadIdentity ();
+		/*  create 5x5 pixel picking region near cursor location	*/
+   	gluPickMatrix ((GLdouble) x, (GLdouble) (viewport[3] - y), 
+                  	5.0, 5.0, viewport);
+   	//gluOrtho2D (-2.0, 2.0, -2.0, 2.0);
+   	gluPerspective(90.0f,(GLfloat)x/(GLfloat)y,0.0,300.0f);
+	//glOrtho(-2.0, 2.0, -2.0, 2.0, -300.0f, 300.f);
+	city->Draw(GL_SELECT);
+
+
+   	glMatrixMode (GL_PROJECTION);
+   	glPopMatrix ();
+   	glFlush ();
+
+   	hits = glRenderMode (GL_RENDER);
+   	processHits (hits, selectBuf);
+
+   	glutPostRedisplay();
+   }
+} 
 
 ///////////////////////////////////////////////////////////////
 // Callback routine executed whenever the window is resized. //
@@ -582,6 +649,7 @@ int main(int argc, char **argv)
    // Some keys and special keys.
    glutKeyboardFunc(&myCBKey);
    glutSpecialFunc(&mySCBKey);
+   glutMouseFunc(mouse);
 
    // OK, OpenGL's ready to go.  Let's call our own init function.
    MyInit(Window_Width, Window_Height);

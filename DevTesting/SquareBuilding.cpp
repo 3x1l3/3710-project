@@ -27,7 +27,7 @@ SquareBuilding::~SquareBuilding()
 {
 }
 
-void SquareBuilding::Draw()
+void SquareBuilding::Draw(GLenum mode)
 {
    glPushMatrix();
    glPushAttrib(GL_CURRENT_COLOR); //may or may not work
@@ -36,7 +36,8 @@ void SquareBuilding::Draw()
    
    //glColor3f(_red, _green, _blue);
    glMaterialf ( GL_FRONT_AND_BACK, GL_AMBIENT, 1.0) ;
-
+   if (mode == GL_SELECT)
+     glLoadName(this->getBuildingID());
    glutSolidCube(1.0);
    glPopAttrib();			//matched with PushAttrib above.
    glPopMatrix();

@@ -18,7 +18,7 @@ class CityManager
     ~CityManager();
     
   void AddCityBlock(CityBlock* newBlock);
-  void Draw();
+  void Draw(GLenum mode);
   void SetOrigin(float x, float y, float z);
   void setRoadWidth(int newWidth);
   

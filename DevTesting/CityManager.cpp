@@ -36,7 +36,7 @@ CityBlock* CityManager::BlockAt(int index)
 }
 
 
-void CityManager::Draw()
+void CityManager::Draw(GLenum mode)
 {
    glPushMatrix();
    
@@ -58,7 +58,7 @@ void CityManager::Draw()
    for(unsigned i = 0; i < cityBlocks.size(); i++)
    {
      cityBlocks[i]->setRoadWidth(roadWidth);
-     cityBlocks.at(i)->Draw();
+     cityBlocks.at(i)->Draw(mode);
    }
    
    glPopMatrix();

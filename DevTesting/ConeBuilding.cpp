@@ -26,7 +26,7 @@ ConeBuilding::~ConeBuilding()
 {
 }
 
-void ConeBuilding::Draw()
+void ConeBuilding::Draw(GLenum mode)
 {
    glPushMatrix();
    glPushAttrib(GL_CURRENT_COLOR); //may or may not work
@@ -39,7 +39,8 @@ void ConeBuilding::Draw()
    
    //glColor3f(_red, _green, _blue);
    glMaterialf ( GL_FRONT_AND_BACK, GL_AMBIENT, 1.0) ;
-
+    if (mode == GL_SELECT)
+      glLoadName(this->getBuildingID());
    glutSolidCone(2.0, 4, 6, 6);
    glPopAttrib();			//matched with PushAttrib above.
    glPopMatrix();

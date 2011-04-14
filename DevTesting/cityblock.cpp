@@ -14,6 +14,8 @@ CityBlock::CityBlock()
   roadWidth = SIZE / 2;
   blockID = 0;
   buildings.clear();
+
+
   
 }
 
@@ -38,7 +40,7 @@ Building* CityBlock::BuildingAt(int index)
 }
 
 
-void CityBlock::Draw()
+void CityBlock::Draw(GLenum mode)
 {
    glPushMatrix();
    
@@ -112,16 +114,27 @@ void CityBlock::Draw()
    
    for(unsigned x = 0; x < buildings.size(); x++)
    {
-     
+   
      //unsigned x = rand() % buildings.size();
      glColor3f( buildings.at(x)->GetRed(), buildings.at(x)->GetGreen(), buildings.at(x)->GetBlue() );
-     buildings.at(x)->Draw();
+     if (!this->isBuildingDestroyed(buildings.at(x)->getBuildingID()))
+      buildings.at(x)->Draw(mode);
    }
    
    glPopMatrix();
 
 }
 
+
+
+bool CityBlock::isBuildingDestroyed(int buildingID) {
+  extern vector<int> destroyed;
+  for (int i=0; i< destroyed.size(); i++) {
+      if (buildingID == destroyed[i])
+	return true;
+  }
+  return false;
+}
 void CityBlock::SetOrigin(float x, float y, float z)
 {
   x_coord = x;
