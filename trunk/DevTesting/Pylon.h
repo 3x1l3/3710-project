@@ -25,7 +25,7 @@ class Pylon : public Building
     Pylon(float x = 0, float y = 0, float z = 0);
     ~Pylon();
 
-    void Draw();
+    void Draw(GLenum mode);
 };
 
 #endif

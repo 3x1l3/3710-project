@@ -25,7 +25,7 @@ class ConeBuilding : public Building
     ConeBuilding(float x = 0, float y = 0, float z = 0);
     ~ConeBuilding();
 
-    void Draw();
+    void Draw(GLenum mode);
 };
 
 #endif

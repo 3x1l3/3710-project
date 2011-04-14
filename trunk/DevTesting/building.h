@@ -28,7 +28,7 @@ class Building
     void SetColor(float, float, float);
     void SetOrigin(float, float, float);
     void SetScale(float, float, float);
-    virtual void Draw() = 0;
+    virtual void Draw(GLenum mode) = 0;
     
     void setBuildingID(int newID);
     int getBuildingID();

@@ -26,7 +26,7 @@ SphereBuilding::~SphereBuilding()
 {
 }
 
-void SphereBuilding::Draw()
+void SphereBuilding::Draw(GLenum mode)
 {
    glPushMatrix();
    glPushAttrib(GL_CURRENT_COLOR); //may or may not work
@@ -35,7 +35,8 @@ void SphereBuilding::Draw()
    
    //glColor3f(_red, _green, _blue);
    glMaterialf ( GL_FRONT_AND_BACK, GL_AMBIENT, 1.0) ;
-
+    if (mode == GL_SELECT)
+      glLoadName(this->getBuildingID());
    glutSolidSphere(1.0, 20, 20);
    glPopAttrib();			//matched with PushAttrib above.
    glPopMatrix();

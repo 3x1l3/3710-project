@@ -25,7 +25,7 @@ class SphereBuilding : public Building
     SphereBuilding(float x = 0, float y = 0, float z = 0);
     ~SphereBuilding();
 
-    void Draw();
+    void Draw(GLenum mode);
 };
 
 #endif

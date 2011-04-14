@@ -26,7 +26,7 @@ Pylon::~Pylon ()
 {
 }
 
-void Pylon::Draw()
+void Pylon::Draw(GLenum mode)
 {
    glPushMatrix();
    glPushAttrib(GL_CURRENT_COLOR); //may or may not work
@@ -43,7 +43,8 @@ void Pylon::Draw()
    
    //glColor3f(_red, _green, _blue);
    glMaterialf ( GL_FRONT_AND_BACK, GL_AMBIENT, 1.0) ;
-
+    if (mode == GL_SELECT)
+      glLoadName(this->getBuildingID());
    //drawring the bottom of the pylon
    glBegin(GL_TRIANGLE_FAN);
    glColor3f(1.0f,45.0f,50.0f);
@@ -68,7 +69,8 @@ void Pylon::Draw()
    glVertex3f(-.5,1,.25);
    glEnd();
    
-  
+      if (mode == GL_SELECT)
+      glLoadName(this->getBuildingID());
    //drawring the yop of the pylon
    glBegin(GL_TRIANGLE_FAN);
    glColor3f(1.0f,45.0f,50.0f);
