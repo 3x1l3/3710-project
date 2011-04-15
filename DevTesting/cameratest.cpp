@@ -62,9 +62,13 @@ float blueClearColor = 100;
 
 float turnArrowExtraRot = 0;
 
+int turned = 0;
+float robotInitialX = 314.5;
+float robotInitialZ = 314.5;
+
 bool gamePaused;
 
-Robot* robot = new Robot(314.5, 0.5, 314.5);
+Robot* robot = new Robot(robotInitialX, 0.5, robotInitialZ);
 Camera* camera = new Camera(robot->getX(),1.5, robot->getZ()+viewing_distance, robot->getX(), robot->getY(), robot->getZ());
 
 
@@ -240,6 +244,7 @@ void myCBKey(unsigned char key, int x, int y)
 	robot->turnBodyLeft();
 	robot->updateForwardVec(2);
 	turnArrowExtraRot+=1;
+	turned = 1;
       }
       
       break;
@@ -251,6 +256,7 @@ void myCBKey(unsigned char key, int x, int y)
 	robot->turnBodyRight();
 	robot->updateForwardVec(1);
 	turnArrowExtraRot+=1;
+	turned = 1;
       }
       break;
     case 102:
@@ -267,7 +273,15 @@ void myCBKey(unsigned char key, int x, int y)
       break;
       
     case 'r':
-      //TODO Pause;
+        robot = new Robot(robotInitialX, 0.5, robotInitialZ);
+        camera = new Camera(robot->getX(),1.5, robot->getZ()+viewing_distance, robot->getX(), robot->getY(), robot->getZ());
+	forwardStepsTaken = 0.0f;
+	showMoveHint = 0;
+	if(turned == 1)
+	{
+	  	arrowDirection = !arrowDirection;
+		turned = 0;
+	}
       break;
       
     }
