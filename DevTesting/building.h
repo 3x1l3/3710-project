@@ -37,11 +37,15 @@ class Building
     float GetGreen();
     float GetBlue();
     
+    std::string returnName();
+    
     
   protected:
 	
     float x, y, z;
     int buildingID;
+    
+    std::string buildingName;
     
     bool doRender;
     float xSize, ySize, zSize;

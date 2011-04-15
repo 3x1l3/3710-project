@@ -19,6 +19,8 @@ Pylon::Pylon (float x, float y, float z)
   
   doRender = true;
   
+  buildingName = "pylon";
+  
 }
 
 

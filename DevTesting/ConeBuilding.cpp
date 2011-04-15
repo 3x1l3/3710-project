@@ -19,6 +19,8 @@ ConeBuilding::ConeBuilding(float x, float y, float z)
   
   doRender = true;
   
+  buildingName = "cone";
+  
 }
 
 
