@@ -244,7 +244,8 @@ void myCBKey(unsigned char key, int x, int y)
 	robot->turnBodyLeft();
 	robot->updateForwardVec(2);
 	turnArrowExtraRot+=1;
-	turned = 1;
+	turned += 1;
+
       }
       
       break;
@@ -256,7 +257,8 @@ void myCBKey(unsigned char key, int x, int y)
 	robot->turnBodyRight();
 	robot->updateForwardVec(1);
 	turnArrowExtraRot+=1;
-	turned = 1;
+	turned += 1;
+
       }
       break;
     case 102:
@@ -277,9 +279,13 @@ void myCBKey(unsigned char key, int x, int y)
         camera = new Camera(robot->getX(),1.5, robot->getZ()+viewing_distance, robot->getX(), robot->getY(), robot->getZ());
 	forwardStepsTaken = 0.0f;
 	showMoveHint = 0;
-	if(turned == 1)
+	if(fmod(turned, 2) == 0)
 	{
-	  	arrowDirection = !arrowDirection;
+		turned = 0;
+	}
+	if(fmod(turned, 2) == 1)
+	{
+	        arrowDirection = !arrowDirection;
 		turned = 0;
 	}
       break;
