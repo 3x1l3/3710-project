@@ -118,6 +118,8 @@ static void drawTurningArrows()
 /////////////////////////////////////////////////////////
 void CallBackRenderScene(void)
 {
+  if(gamePaused) { return; } 
+  
    //clearing the color so we can tell when the robot is able to turn left and right
    //made the sky turn red when he is able to turn
    glClearColor(redClearColor,greenClearColor,blueClearColor, 0); 
