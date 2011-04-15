@@ -60,10 +60,10 @@ void CityManager::Draw(GLenum mode)
    //draw our ground plane)
    glColor3f(1.0, 1.0, 0.1);
    glBegin(GL_QUADS);
-   glVertex3f(0-15, -0.01, 0-15);
-   glVertex3f(1.7*size, -0.01, 0-15);
-   glVertex3f(1.7*size, -0.01, 1.7*size);
-   glVertex3f(0-15, -0.01, 1.7*size);
+   glVertex3f(0-20, -0.01, 0-20);
+   glVertex3f(1.8*size, -0.01, 0-20);
+   glVertex3f(1.8*size, -0.01, 1.8*size);
+   glVertex3f(0-20, -0.01, 1.8*size);
    glEnd();
   
    int x = 0;
