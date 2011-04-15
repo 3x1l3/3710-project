@@ -173,7 +173,7 @@ void myCBKey(unsigned char key, int x, int y)
    
   
    switch (key) {
-     case 119: //forward w
+     case 'z': //forward z
      robot->moveFoward();
      camera->setLookat(camera->getEye_x(), 1.5, camera->getEye_z(), robot->getX(), robot->getY(), robot->getZ());
      camera->moveCamera(robot->getForwardVec());
@@ -224,7 +224,7 @@ void myCBKey(unsigned char key, int x, int y)
      
      
      break;
-    case 97: //left a
+    case 'q': //left q
       if(fmod(forwardStepsTaken, 37) == 0)
       {
 	arrowDirection = !arrowDirection;
@@ -235,7 +235,7 @@ void myCBKey(unsigned char key, int x, int y)
       }
       
       break;
-    case 100: //right d
+    case 'a': //right a
       if(fmod(forwardStepsTaken, 37) == 0)
       {
 	arrowDirection = !arrowDirection;
@@ -251,6 +251,15 @@ void myCBKey(unsigned char key, int x, int y)
    
       
       break;
+      
+    case 'p':
+      //TODO Pause
+      break;
+      
+    case 'r':
+      //TODO Pause;
+      break;
+      
     }
     
     //printf("%d", key);
@@ -315,24 +324,28 @@ void mySCBKey(int key, int x, int y) {
 */
 void processHits (GLint hits, GLuint buffer[])
 {
-   unsigned int i, j;
-   GLint names, *ptr;
 
-   //printf ("hits = %d\n", hits);
+   unsigned int i, j;
+   GLint ii, jj, names, *ptr;
+
+   cout << "hits = " <<  hits << std::endl;
    ptr = (GLint *) buffer; 
-   for (i = 0; i < hits; i++) {	/*  for each hit  */
-      names = *ptr;
-	   ptr+=3;
-      for (j = 0; j < names; j++) { /*  for each name */
-	  //cout << (*ptr) << endl;
-         if(*ptr!=0) 
-	   destroyed.push_back(*ptr);
-         ptr++;
+   for (i = 0; i < hits; i++) { // For each hit record,
+      names = *ptr;             // How many names are in this hit record?
+	ptr+=3;                   // Skip the depth min and max information.
+
+      for (j = 0; j < names; j++) { //  Look for each name in this record
+         if (*ptr==1) 
+            cout << ("red rectangle\n");  // You need to make a note of the correspondence between you
+         else                            // the numeral name and object when you program.
+            cout << ("blue rectangle\n");
+
+         ptr++;                          // Go to the next name
       }
-      //printf ("\n");
+      // When this loop is done, ptr points to the start of the next hit record.
+      cout << "\n";
    }
-   
-  
+
 }
 
 void mouse(int button, int state, int x, int y)
@@ -344,30 +357,37 @@ void mouse(int button, int state, int x, int y)
    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) 
    {
    	glGetIntegerv (GL_VIEWPORT, viewport);
+	
+	float floatArray[4];
 
+	glGetFloatv( GL_PROJECTION_MATRIX, &floatArray[0]  );
+	
    	glSelectBuffer (SIZE, selectBuf);
    	glRenderMode(GL_SELECT);
-
-   	glInitNames();
+   	
+	glInitNames();
    	glPushName(0);
 
 
+
    	glMatrixMode (GL_PROJECTION);
+
    	glPushMatrix ();
    	glLoadIdentity ();
 		/*  create 5x5 pixel picking region near cursor location	*/
-   	gluPickMatrix ((GLdouble) x, (GLdouble) (viewport[3] - y), 
-                  	5.0, 5.0, viewport);
-   	//gluOrtho2D (-2.0, 2.0, -2.0, 2.0);
-   	gluPerspective(90.0f,(GLfloat)x/(GLfloat)y,0.0,300.0f);
+   	gluPickMatrix ( x , (GLdouble) (viewport[3] - y), 
+                  	50.0, 50.0, viewport);
+   	//glOrtho(-20.0, 20.0, -20.0, 20.0, 0, 300);
+   	gluPerspective(60.0f,(GLfloat)viewport[2]/(GLfloat)viewport[3],0.00001,300.0f);
 	//glOrtho(-2.0, 2.0, -2.0, 2.0, -300.0f, 300.f);
 	city->Draw(GL_SELECT);
-
+	
 
    	glMatrixMode (GL_PROJECTION);
    	glPopMatrix ();
    	glFlush ();
 
+        glLoadMatrixf(floatArray);
    	hits = glRenderMode (GL_RENDER);
    	processHits (hits, selectBuf);
 
