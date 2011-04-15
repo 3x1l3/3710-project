@@ -62,6 +62,8 @@ float blueClearColor = 100;
 
 float turnArrowExtraRot = 0;
 
+bool gamePaused;
+
 Robot* robot = new Robot(314.5, 0.5, 314.5);
 Camera* camera = new Camera(robot->getX(),1.5, robot->getZ()+viewing_distance, robot->getX(), robot->getY(), robot->getZ());
 
@@ -171,6 +173,10 @@ void myCBKey(unsigned char key, int x, int y)
 {
     std::vector<float> test;
    
+   if(key != 'p' && gamePaused)
+   {
+     return;
+   }
   
    switch (key) {
      case 'z': //forward z
@@ -253,7 +259,9 @@ void myCBKey(unsigned char key, int x, int y)
       break;
       
     case 'p':
-      //TODO Pause
+      {
+	gamePaused = !gamePaused;
+      }
       break;
       
     case 'r':
@@ -267,6 +275,12 @@ void myCBKey(unsigned char key, int x, int y)
 }
 
 void mySCBKey(int key, int x, int y) {
+  
+  if(gamePaused)
+  {
+    return;
+  }
+  
   
   switch (key)
   {
@@ -324,28 +338,24 @@ void mySCBKey(int key, int x, int y) {
 */
 void processHits (GLint hits, GLuint buffer[])
 {
-
    unsigned int i, j;
-   GLint ii, jj, names, *ptr;
+   GLint names, *ptr;
 
-   cout << "hits = " <<  hits << std::endl;
+   //printf ("hits = %d\n", hits);
    ptr = (GLint *) buffer; 
-   for (i = 0; i < hits; i++) { // For each hit record,
-      names = *ptr;             // How many names are in this hit record?
-	ptr+=3;                   // Skip the depth min and max information.
-
-      for (j = 0; j < names; j++) { //  Look for each name in this record
-         if (*ptr==1) 
-            cout << ("red rectangle\n");  // You need to make a note of the correspondence between you
-         else                            // the numeral name and object when you program.
-            cout << ("blue rectangle\n");
-
-         ptr++;                          // Go to the next name
+   for (i = 0; i < hits; i++) { /*  for each hit  */
+      names = *ptr;
+           ptr+=3;
+      for (j = 0; j < names; j++) { /*  for each name */
+          //cout << (*ptr) << endl;
+         if(*ptr!=0) 
+           destroyed.push_back(*ptr);
+         ptr++;
       }
-      // When this loop is done, ptr points to the start of the next hit record.
-      cout << "\n";
+      //printf ("\n");
    }
-
+   
+  
 }
 
 void mouse(int button, int state, int x, int y)
@@ -356,42 +366,35 @@ void mouse(int button, int state, int x, int y)
 
    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) 
    {
-   	glGetIntegerv (GL_VIEWPORT, viewport);
-	
-	float floatArray[4];
+        glGetIntegerv (GL_VIEWPORT, viewport);
 
-	glGetFloatv( GL_PROJECTION_MATRIX, &floatArray[0]  );
-	
-   	glSelectBuffer (SIZE, selectBuf);
-   	glRenderMode(GL_SELECT);
-   	
-	glInitNames();
-   	glPushName(0);
+        glSelectBuffer (SIZE, selectBuf);
+        glRenderMode(GL_SELECT);
+
+        glInitNames();
+        glPushName(0);
 
 
+        glMatrixMode (GL_PROJECTION);
+        glPushMatrix ();
+        glLoadIdentity ();
+                /*  create 5x5 pixel picking region near cursor location        */
+        gluPickMatrix ((GLdouble) x, (GLdouble) (viewport[3] - y), 
+                        5.0, 5.0, viewport);
+        //gluOrtho2D (-2.0, 2.0, -2.0, 2.0);
+        gluPerspective(90.0f,(GLfloat)viewport[2]/(GLfloat)viewport[3],0.0,300.0f);
+        //glOrtho(-2.0, 2.0, -2.0, 2.0, -300.0f, 300.f);
+        city->Draw(GL_SELECT);
 
-   	glMatrixMode (GL_PROJECTION);
 
-   	glPushMatrix ();
-   	glLoadIdentity ();
-		/*  create 5x5 pixel picking region near cursor location	*/
-   	gluPickMatrix ( x , (GLdouble) (viewport[3] - y), 
-                  	50.0, 50.0, viewport);
-   	//glOrtho(-20.0, 20.0, -20.0, 20.0, 0, 300);
-   	gluPerspective(60.0f,(GLfloat)viewport[2]/(GLfloat)viewport[3],0.00001,300.0f);
-	//glOrtho(-2.0, 2.0, -2.0, 2.0, -300.0f, 300.f);
-	city->Draw(GL_SELECT);
-	
+        glMatrixMode (GL_PROJECTION);
+        glPopMatrix ();
+        glFlush ();
 
-   	glMatrixMode (GL_PROJECTION);
-   	glPopMatrix ();
-   	glFlush ();
+        hits = glRenderMode (GL_RENDER);
+        processHits (hits, selectBuf);
 
-        glLoadMatrixf(floatArray);
-   	hits = glRenderMode (GL_RENDER);
-   	processHits (hits, selectBuf);
-
-   	glutPostRedisplay();
+        glutPostRedisplay();
    }
 } 
 
