@@ -20,6 +20,8 @@ SquareBuilding::SquareBuilding(float x, float y, float z)
   
   doRender = true;
   
+  buildingName = "square";
+  
 }
 
 

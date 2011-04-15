@@ -22,6 +22,8 @@ Building::Building(float x, float y, float z)
   
   doRender = true;
   
+  buildingName = "";
+  
 }
 
 
@@ -77,3 +79,7 @@ void Building::setBuildingID(int newID)
   buildingID = newID;
 }
 
+std::string Building::returnName()
+{
+  return buildingName;
+}

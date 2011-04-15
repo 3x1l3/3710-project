@@ -19,6 +19,8 @@ SphereBuilding::SphereBuilding(float x, float y, float z)
   
   doRender = true;
   
+  buildingName = "sphere";
+  
 }
 
 
