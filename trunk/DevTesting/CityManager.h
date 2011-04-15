@@ -29,6 +29,16 @@ class CityManager
     int x_coord, y_coord, z_coord;
     int roadWidth;
     vector<CityBlock*> cityBlocks;
+    
+    
+    //spacer is an extra spacer for positioning our roadmarks
+    //decides the space between ticks
+    float spacer;
+    
+    
+    float betweenSpacer;
+    
+    float blockSpacer;
 
 };
 
